@@ -1,9 +1,18 @@
 package org.bkd.saas.security.filter;
 
+import static org.bkd.saas.security.rest.Routes.ENABLE_USER;
+import static org.bkd.saas.security.rest.Routes.LOGIN;
+import static org.bkd.saas.security.rest.Routes.RESET_PASSWORD;
+import static org.bkd.saas.security.rest.Routes.SEND_ACTIVATION_EMAIL;
+import static org.bkd.saas.security.rest.Routes.SEND_FORGOTTEN_PASSWORD_EMAIL;
+import static org.bkd.saas.user.rest.Routes.CREATE_USER;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.bkd.saas.security.dto.RateLimitPolicyEnum;
 import org.bkd.saas.security.exception.TooManyRequestsException;
@@ -12,16 +21,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import java.io.IOException;
-import java.util.Map;
-
-import static org.bkd.saas.security.rest.Routes.ENABLE_USER;
-import static org.bkd.saas.security.rest.Routes.LOGIN;
-import static org.bkd.saas.security.rest.Routes.RESET_PASSWORD;
-import static org.bkd.saas.security.rest.Routes.SEND_ACTIVATION_EMAIL;
-import static org.bkd.saas.security.rest.Routes.SEND_FORGOTTEN_PASSWORD_EMAIL;
-import static org.bkd.saas.user.rest.Routes.CREATE_USER;
 
 @Service
 @RequiredArgsConstructor
@@ -49,8 +48,8 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
   @Override
   public void doFilterInternal(HttpServletRequest request,
-                                  HttpServletResponse response,
-                                  FilterChain filterChain) throws ServletException, IOException {
+                               HttpServletResponse response,
+                               FilterChain filterChain) throws ServletException, IOException {
     try {
       rateLimitService.consumeOrThrow(POLICY_BY_PATH.get(request.getServletPath()), request.getRemoteAddr());
     }

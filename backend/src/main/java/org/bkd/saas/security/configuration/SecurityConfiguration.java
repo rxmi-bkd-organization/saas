@@ -71,7 +71,9 @@ public class SecurityConfiguration {
   }
 
   private Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsConfigurer() {
-    return authorizeHttpRequests -> authorizeHttpRequests.requestMatchers(PUBLIC_BASE_PATH + "/**", "/error", "/actuator/health/**")
+    return authorizeHttpRequests -> authorizeHttpRequests.requestMatchers(PUBLIC_BASE_PATH + "/**",
+                                                                          "/error",
+                                                                          "/actuator/health/**")
                                                          .permitAll()
                                                          .anyRequest()
                                                          .authenticated();
