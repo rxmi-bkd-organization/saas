@@ -1,9 +1,8 @@
 package org.bkd.saas.security.dto;
 
+import java.time.Duration;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import java.time.Duration;
 
 @Getter
 @RequiredArgsConstructor
