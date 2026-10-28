@@ -1,0 +1,13 @@
+<app-form-container
+  [form]="signInForm"
+  [heading]="'signIn.header' | transloco"
+  [submitLabel]="'signIn.submit' | transloco"
+>
+  <app-form-field [field]="signInForm.email" [label]="'label.email' | transloco" type="email" />
+  <app-form-field [field]="signInForm.password" [label]="'label.password' | transloco" type="password" />
+</app-form-container>
+
+<div class="flex gap-6">
+  <a [routerLink]="ROUTE_URLS.signUp">{{ 'signIn.noAccount' | transloco }}</a>
+  <a [routerLink]="ROUTE_URLS.forgotPassword">{{ 'signIn.forgotPassword' | transloco }}</a>
+</div>

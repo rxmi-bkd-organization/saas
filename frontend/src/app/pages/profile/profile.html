@@ -1,0 +1,11 @@
+@if (user(); as user) {
+  <section>
+    <p>{{ 'profile.email' | transloco }}</p>
+    <p>{{ user.email }}</p>
+    <p>{{ 'profile.role' | transloco }}</p>
+    <p>{{ user.role }}</p>
+    <p>{{ 'profile.memberSince' | transloco }}</p>
+    <p>{{ user.createdAt | date: 'mediumDate' : undefined : language() }}</p>
+  </section>
+}
+<app-update-password-form />

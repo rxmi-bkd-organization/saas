@@ -1,0 +1,9 @@
+<label class="grid gap-2">
+  {{ label() }}
+  <input [type]="type()" [formField]="field()" />
+</label>
+@if (field()().touched()) {
+  @for (error of field()().errors(); track error.kind) {
+    <p>{{ error.message }}</p>
+  }
+}

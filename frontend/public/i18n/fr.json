@@ -1,0 +1,112 @@
+{
+  "nav": {
+    "profile": "Profil",
+    "admin": "Administration",
+    "logout": "Déconnexion",
+    "signIn": "Se connecter",
+    "language": "Langue"
+  },
+  "field": {
+    "email": "e-mail",
+    "password": "mot de passe"
+  },
+  "label": {
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "newPassword": "Nouveau mot de passe",
+    "oldPassword": "Mot de passe actuel"
+  },
+  "error": {
+    "required": "{{ field }} est requis",
+    "invalid": "{{ field }} est invalide",
+    "minLength": "{{ field }} doit contenir au moins {{ length }} caractères",
+    "maxLength": "{{ field }} doit contenir au plus {{ length }} caractères",
+    "invalidCredentials": "E-mail ou mot de passe invalide",
+    "invalidSignInRequest": "Veuillez vérifier votre e-mail et votre mot de passe",
+    "disabledAccount": "Votre compte est désactivé ou pas encore activé",
+    "tooManyAttempts": "Trop de tentatives échouées, veuillez réessayer plus tard",
+    "serverError": "Une erreur est survenue de notre côté, veuillez réessayer plus tard",
+    "networkError": "Impossible de joindre le serveur, veuillez vérifier votre connexion",
+    "accountNotFound": "Aucun compte trouvé pour cet e-mail",
+    "forgotPasswordFailed": "Impossible d'envoyer l'e-mail de réinitialisation, veuillez réessayer",
+    "invalidResetPasswordRequest": "Veuillez vérifier votre nouveau mot de passe",
+    "invalidResetToken": "Ce lien de réinitialisation est invalide ou a expiré",
+    "invalidSignUpRequest": "Veuillez vérifier votre e-mail et votre mot de passe",
+    "emailAlreadyUsed": "Un compte avec cet e-mail existe déjà",
+    "invalidUpdatePasswordRequest": "Veuillez vérifier votre mot de passe actuel et le nouveau"
+  },
+  "errorPage": {
+    "backToHome": "Retour à l'accueil",
+    "accessDenied": {
+      "heading": "Accès refusé",
+      "message": "Vous n'avez pas la permission de voir cette page."
+    },
+    "notFound": {
+      "heading": "Page introuvable",
+      "message": "La page que vous recherchez n'existe pas ou a été déplacée."
+    }
+  },
+  "emailSent": {
+    "heading": "Vérifiez vos e-mails",
+    "description": "Si un compte existe pour cet e-mail, un e-mail a été envoyé.",
+    "link": "Retour à la connexion"
+  },
+  "enableAccount": {
+    "loading": "Activation de votre compte ...",
+    "enabled": {
+      "heading": "Compte activé",
+      "description": "Votre compte est activé. Vous pouvez maintenant vous connecter.",
+      "link": "Aller à la connexion"
+    },
+    "invalid": {
+      "heading": "Lien invalide ou expiré",
+      "description": "Ce lien d'activation est invalide ou a expiré.",
+      "link": "Retour à la connexion"
+    },
+    "error": {
+      "heading": "Une erreur est survenue",
+      "description": "Nous n'avons pas pu activer votre compte. Veuillez réessayer plus tard.",
+      "link": "Retour à la connexion"
+    },
+    "pending": {
+      "heading": "Vérifiez votre e-mail",
+      "description": "Votre compte a été créé. Cliquez sur le lien que nous vous avons envoyé par e-mail pour l'activer.",
+      "link": "Retour à la connexion"
+    }
+  },
+  "forgotPassword": {
+    "header": "Mot de passe oublié",
+    "submit": "Envoyer l'e-mail de réinitialisation",
+    "backToSignIn": "Retour à la connexion"
+  },
+  "passwordUpdated": {
+    "heading": "Mot de passe mis à jour",
+    "description": "Votre mot de passe a été réinitialisé. Vous pouvez maintenant vous connecter.",
+    "link": "Aller à la connexion"
+  },
+  "profile": {
+    "email": "E-mail",
+    "role": "Rôle",
+    "memberSince": "Membre depuis"
+  },
+  "resetPassword": {
+    "header": "Réinitialiser le mot de passe",
+    "submit": "Réinitialiser le mot de passe"
+  },
+  "signIn": {
+    "header": "Connexion",
+    "submit": "Connexion",
+    "noAccount": "Pas encore de compte ? Inscrivez-vous",
+    "forgotPassword": "Mot de passe oublié ?"
+  },
+  "signUp": {
+    "header": "Inscription",
+    "submit": "Inscription",
+    "haveAccount": "Déjà un compte ? Connectez-vous"
+  },
+  "updatePassword": {
+    "header": "Modifier le mot de passe",
+    "submit": "Modifier le mot de passe",
+    "success": "Votre mot de passe a été modifié."
+  }
+}
