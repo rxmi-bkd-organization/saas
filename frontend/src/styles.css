@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 
-
 @theme {
   --color-main: #ffdc58;
   --color-accent: #ff6b9d;
@@ -15,12 +14,12 @@
 
 @layer base {
   a {
-    @apply underline font-bold
+    @apply underline font-bold;
   }
 }
 
 @layer components {
   .ui-input {
-    @apply bg-red-500
+    @apply bg-red-500;
   }
 }
