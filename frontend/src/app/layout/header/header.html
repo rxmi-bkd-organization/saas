@@ -3,7 +3,6 @@
 
   <nav>
     <ul class="flex gap-6">
-
       @if (isAuthenticated()) {
         <li>
           <a [routerLink]="ROUTE_URLS.profile">{{ 'nav.profile' | transloco }}</a>
@@ -20,7 +19,7 @@
         </li>
       }
 
-      @if(!isAuthenticated()) {
+      @if (!isAuthenticated()) {
         <li>
           <a [routerLink]="ROUTE_URLS.signIn">{{ 'nav.signIn' | transloco }}</a>
         </li>
@@ -29,7 +28,6 @@
       <li>
         <app-language-selector />
       </li>
-
     </ul>
   </nav>
 </header>
