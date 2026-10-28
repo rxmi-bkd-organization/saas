@@ -14,7 +14,14 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
+  format-and-lint:
+    uses: ./.github/workflows/format-and-lint.yml
+
   build:
+    needs: [test, format-and-lint]
     runs-on: ubuntu-latest
     strategy:
       matrix:
