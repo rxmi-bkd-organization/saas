@@ -49,7 +49,7 @@ Do this first, so the first deploy already uses your own images and directory.
 
 ### First deploy and verification
 
-- Push to `master`, or run the `build & deploy` workflow manually.
+- Push to `master`, or run the `build and deploy` workflow manually.
 - On the server, check that the three containers are healthy
   ```bash
   cd /home/github-actions/acme-crm

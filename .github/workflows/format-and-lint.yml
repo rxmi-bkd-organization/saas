@@ -1,4 +1,4 @@
-name: format & lint
+name: format and lint
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: format-&-lint-${{ github.ref }}
+  group: format-and-lint-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
