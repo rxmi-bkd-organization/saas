@@ -89,5 +89,5 @@ jobs:
           script: |
             cd /home/github-actions/saas
             docker compose -f compose.production.yml pull
-            docker compose -f compose.production.yml up -d --remove-orphans
+            docker compose -f compose.production.yml up -d --wait --wait-timeout 300 --remove-orphans
             docker image prune -f
