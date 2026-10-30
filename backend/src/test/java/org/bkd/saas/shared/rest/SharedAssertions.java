@@ -1,4 +1,4 @@
-package org.bkd.saas.shared;
+package org.bkd.saas.shared.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

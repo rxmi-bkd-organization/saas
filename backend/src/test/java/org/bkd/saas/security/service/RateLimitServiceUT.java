@@ -1,4 +1,4 @@
-package org.bkd.saas.security;
+package org.bkd.saas.security.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;

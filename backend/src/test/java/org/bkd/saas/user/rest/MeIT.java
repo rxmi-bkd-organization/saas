@@ -1,7 +1,7 @@
-package org.bkd.saas.user;
+package org.bkd.saas.user.rest;
 
-import static org.bkd.saas.shared.SharedAssertions.assertKo;
-import static org.bkd.saas.user.UserAssertions.assertMeOk;
+import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
+import static org.bkd.saas.user.rest.UserAssertions.assertMeOk;
 import static org.bkd.saas.user.rest.Routes.ME;
 
 import org.bkd.saas.AbstractIntegrationTest;

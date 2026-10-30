@@ -1,10 +1,10 @@
-package org.bkd.saas.user;
+package org.bkd.saas.user.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.bkd.saas.shared.SharedAssertions.assertKo;
+import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MAX_LENGTH;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MIN_LENGTH;
-import static org.bkd.saas.user.UserAssertions.assertCreateUserOk;
+import static org.bkd.saas.user.rest.UserAssertions.assertCreateUserOk;
 import static org.bkd.saas.user.exception.EmailAlreadyUsedException.ERROR_MSG;
 import static org.bkd.saas.user.rest.Routes.CREATE_USER;
 
