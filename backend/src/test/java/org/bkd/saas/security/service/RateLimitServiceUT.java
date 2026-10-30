@@ -70,11 +70,8 @@ class RateLimitServiceUT {
 
   @Test
   void consumeOrThrow_shouldNeverThrow_whenDisabled() {
-    assertThatCode(() -> {
-      for (int i = 0; i <= POLICY.getCapacity() * 2; i++) {
-        disabledRateLimitService.consumeOrThrow(POLICY, KEY);
-      }
-    }).doesNotThrowAnyException();
+    exhaust(disabledRateLimitService, POLICY, KEY);
+    assertThatCode(() -> disabledRateLimitService.consumeOrThrow(POLICY, KEY)).doesNotThrowAnyException();
   }
 
   @Test
