@@ -1,7 +1,7 @@
 package org.bkd.saas;
 
-import org.bkd.saas.security.SecurityClient;
-import org.bkd.saas.user.UserClient;
+import org.bkd.saas.security.rest.SecurityClient;
+import org.bkd.saas.user.rest.UserClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;

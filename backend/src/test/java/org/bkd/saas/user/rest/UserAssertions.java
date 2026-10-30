@@ -1,4 +1,4 @@
-package org.bkd.saas.user;
+package org.bkd.saas.user.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

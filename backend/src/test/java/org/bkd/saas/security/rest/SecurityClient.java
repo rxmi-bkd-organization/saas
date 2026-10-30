@@ -1,4 +1,4 @@
-package org.bkd.saas.security;
+package org.bkd.saas.security.rest;
 
 import static org.bkd.saas.security.rest.Routes.ENABLE_USER;
 import static org.bkd.saas.security.rest.Routes.LOGIN;

@@ -1,10 +1,10 @@
-package org.bkd.saas.security;
+package org.bkd.saas.security.rest;
 
-import static org.bkd.saas.security.SecurityAssertions.assertLoginOk;
 import static org.bkd.saas.security.rest.Routes.LOGIN;
-import static org.bkd.saas.shared.SharedAssertions.assertKo;
+import static org.bkd.saas.security.rest.SecurityAssertions.assertLoginOk;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MAX_LENGTH;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MIN_LENGTH;
+import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
 
 import org.bkd.saas.AbstractIntegrationTest;
 import org.bkd.saas.security.exception.InvalidCredentialsException;

@@ -1,8 +1,8 @@
-package org.bkd.saas.user;
+package org.bkd.saas.user.rest;
 
-import static org.bkd.saas.shared.SharedAssertions.assertKo;
-import static org.bkd.saas.user.UserAssertions.assertMeOk;
+import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
 import static org.bkd.saas.user.rest.Routes.ME;
+import static org.bkd.saas.user.rest.UserAssertions.assertMeOk;
 
 import org.bkd.saas.AbstractIntegrationTest;
 import org.bkd.saas.security.rest.request.LoginRequest;

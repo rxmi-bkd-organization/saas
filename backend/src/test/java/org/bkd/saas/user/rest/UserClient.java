@@ -1,4 +1,4 @@
-package org.bkd.saas.user;
+package org.bkd.saas.user.rest;
 
 import static org.bkd.saas.user.rest.Routes.CREATE_USER;
 import static org.bkd.saas.user.rest.Routes.ME;

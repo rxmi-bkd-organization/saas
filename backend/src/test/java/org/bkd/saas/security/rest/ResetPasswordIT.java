@@ -1,13 +1,13 @@
-package org.bkd.saas.security;
+package org.bkd.saas.security.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.bkd.saas.security.SecurityAssertions.assertLoginOk;
-import static org.bkd.saas.security.SecurityAssertions.assertResetPasswordOk;
 import static org.bkd.saas.security.rest.Routes.LOGIN;
 import static org.bkd.saas.security.rest.Routes.RESET_PASSWORD;
-import static org.bkd.saas.shared.SharedAssertions.assertKo;
+import static org.bkd.saas.security.rest.SecurityAssertions.assertLoginOk;
+import static org.bkd.saas.security.rest.SecurityAssertions.assertResetPasswordOk;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MAX_LENGTH;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MIN_LENGTH;
+import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
 import static org.bkd.saas.user.rest.Routes.ME;
 
 import java.util.UUID;
