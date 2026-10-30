@@ -1,16 +1,16 @@
 package org.bkd.saas.user.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.bkd.saas.security.rest.SecurityAssertions.assertLoginOk;
 import static org.bkd.saas.security.rest.Routes.LOGIN;
-import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
+import static org.bkd.saas.security.rest.SecurityAssertions.assertLoginOk;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MAX_LENGTH;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MIN_LENGTH;
-import static org.bkd.saas.user.rest.UserAssertions.assertMeOk;
-import static org.bkd.saas.user.rest.UserAssertions.assertUpdateUserPasswordOk;
+import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
 import static org.bkd.saas.user.exception.PasswordMismatchException.ERROR_MSG;
 import static org.bkd.saas.user.rest.Routes.ME;
 import static org.bkd.saas.user.rest.Routes.UPDATE_USER_PASSWORD;
+import static org.bkd.saas.user.rest.UserAssertions.assertMeOk;
+import static org.bkd.saas.user.rest.UserAssertions.assertUpdateUserPasswordOk;
 
 import org.bkd.saas.AbstractIntegrationTest;
 import org.bkd.saas.security.exception.InvalidCredentialsException;

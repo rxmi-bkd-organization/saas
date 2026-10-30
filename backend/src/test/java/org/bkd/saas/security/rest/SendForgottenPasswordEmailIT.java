@@ -1,8 +1,8 @@
 package org.bkd.saas.security.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.bkd.saas.security.rest.SecurityAssertions.assertSendForgottenPasswordEmailOk;
 import static org.bkd.saas.security.rest.Routes.SEND_FORGOTTEN_PASSWORD_EMAIL;
+import static org.bkd.saas.security.rest.SecurityAssertions.assertSendForgottenPasswordEmailOk;
 import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;

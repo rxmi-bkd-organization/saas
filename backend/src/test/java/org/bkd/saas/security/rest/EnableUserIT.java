@@ -1,10 +1,10 @@
 package org.bkd.saas.security.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.bkd.saas.security.rest.SecurityAssertions.assertEnableUserOk;
-import static org.bkd.saas.security.rest.SecurityAssertions.assertLoginOk;
 import static org.bkd.saas.security.exception.InvalidTokenException.ERROR_MSG;
 import static org.bkd.saas.security.rest.Routes.ENABLE_USER;
+import static org.bkd.saas.security.rest.SecurityAssertions.assertEnableUserOk;
+import static org.bkd.saas.security.rest.SecurityAssertions.assertLoginOk;
 import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
 
 import java.util.UUID;

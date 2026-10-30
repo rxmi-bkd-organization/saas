@@ -1,8 +1,8 @@
 package org.bkd.saas.security.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.bkd.saas.security.rest.SecurityAssertions.assertSendActivationEmailOk;
 import static org.bkd.saas.security.rest.Routes.SEND_ACTIVATION_EMAIL;
+import static org.bkd.saas.security.rest.SecurityAssertions.assertSendActivationEmailOk;
 import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;

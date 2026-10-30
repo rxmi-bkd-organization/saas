@@ -8,7 +8,6 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.bkd.saas.security.dto.RateLimitPolicyEnum;
 import org.bkd.saas.security.exception.TooManyRequestsException;
-import org.bkd.saas.security.service.RateLimitService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
