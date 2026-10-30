@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 public class ErrorDtoFactory {
 
   public static ErrorDto buildError(HttpStatus status, String message, String path) {
-    return new ErrorDto(Instant.now().toEpochMilli(), status.value(), status.getReasonPhrase(), message, path);
+    return new ErrorDto(Instant.now(), status.value(), status.getReasonPhrase(), message, path);
   }
 
   public static ResponseEntity<ErrorDto> buildErrorResponse(HttpStatus status,
