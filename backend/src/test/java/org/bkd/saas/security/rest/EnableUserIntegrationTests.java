@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-class EnableUserIT extends AbstractIntegrationTest {
+class EnableUserIntegrationTests extends AbstractIntegrationTest {
   private static final String EMAIL = "enable-user@example.com";
   private static final String PASSWORD = "password123";
   private static final String MALFORMED_JWT = "not-a-jwt";
