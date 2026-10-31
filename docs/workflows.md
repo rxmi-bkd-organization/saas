@@ -32,7 +32,7 @@ format and lint ─┘
 
 - **Trigger:** every push to `master` runs the whole chain, including docs-only pushes. Inside `test` and `format and lint`, the change detection above still applies.
 - **Build:** pushes `ghcr.io/<owner>/<project>-backend` and `-frontend`, each tagged `sha-<short sha>` and `latest`.
-- **Deploy:** copies `compose.production.yml` to the server, then runs `docker compose pull` and `up -d --wait --wait-timeout 300 --remove-orphans`. `--wait` makes the job fail if a service is not healthy after 5 minutes. A failed deploy does not roll back: the new containers stay up until you fix them.
+- **Deploy:** copies `compose.production.yml` and `postgresql.conf` to the server, then runs `docker compose pull` and `up -d --wait --wait-timeout 300 --remove-orphans`. `--wait` makes the job fail if a service is not healthy after 5 minutes. A failed deploy does not roll back: the new containers stay up until you fix them.
 - **Concurrency:** deploys are queued (`group: deploy`, no cancellation), so two pushes never deploy at the same time.
 
 ### Manual run
