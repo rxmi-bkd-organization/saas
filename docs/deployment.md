@@ -40,6 +40,7 @@ Do this first, so the first deploy already uses your own images and directory.
   - `FRONTEND_BASE_URL`: `https://` followed by the same domain. It must use HTTPS because session cookies are `secure` and `same-site=strict`, so the app does not work over plain HTTP.
   - `POSTGRES_DB` / `POSTGRES_USER` / `DB_URL`: keep them consistent because the database name in `DB_URL` must match `POSTGRES_DB`.
   - `JWT_RESET_PASSWORD_TOKEN_SECRET` and `JWT_ACTIVATION_TOKEN_SECRET`: Generate each one with `openssl rand -base64 48`.
+  - `ADMIN_EMAIL` / `ADMIN_PASSWORD`: the admin user, created at every startup if it does not exist, and enabled if it does (password 8 to 64 characters). An existing admin keeps its current password, so changing `ADMIN_PASSWORD` later has no effect. Both are required: if either is missing or invalid, the backend still starts but logs `Admin user seeding failed` and creates no admin.
 - Generate an SSH key pair for deployments: `ssh-keygen -t ed25519 -f deploy_key -N ""`.
 - Add the GitHub repository secrets
   - `SSH_HOST`
