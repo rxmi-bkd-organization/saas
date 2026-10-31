@@ -11,10 +11,10 @@ Do this first, so the first deploy already uses your own images and directory.
 
   | File | Before | After |
   |---|---|---|
-  | `compose.production.yml` | `image: ghcr.io/rxmi-bkd/saas-backend:${IMAGE_TAG:-latest}` | `image: ghcr.io/acme/acme-crm-backend:${IMAGE_TAG:-latest}` |
-  | `compose.production.yml` | `image: ghcr.io/rxmi-bkd/saas-frontend:${IMAGE_TAG:-latest}` | `image: ghcr.io/acme/acme-crm-frontend:${IMAGE_TAG:-latest}` |
-  | `build-and-deploy.yml` | `image: ghcr.io/rxmi-bkd/saas-backend` | `image: ghcr.io/acme/acme-crm-backend` |
-  | `build-and-deploy.yml` | `image: ghcr.io/rxmi-bkd/saas-frontend` | `image: ghcr.io/acme/acme-crm-frontend` |
+  | `compose.production.yml` | `image: ghcr.io/rxmi-bkd-organization/saas-backend:${IMAGE_TAG:-latest}` | `image: ghcr.io/acme/acme-crm-backend:${IMAGE_TAG:-latest}` |
+  | `compose.production.yml` | `image: ghcr.io/rxmi-bkd-organization/saas-frontend:${IMAGE_TAG:-latest}` | `image: ghcr.io/acme/acme-crm-frontend:${IMAGE_TAG:-latest}` |
+  | `build-and-deploy.yml` | `image: ghcr.io/rxmi-bkd-organization/saas-backend` | `image: ghcr.io/acme/acme-crm-backend` |
+  | `build-and-deploy.yml` | `image: ghcr.io/rxmi-bkd-organization/saas-frontend` | `image: ghcr.io/acme/acme-crm-frontend` |
   | `build-and-deploy.yml` | `target: /home/github-actions/saas` | `target: /home/github-actions/acme-crm` |
   | `build-and-deploy.yml` | `cd /home/github-actions/saas` | `cd /home/github-actions/acme-crm` |
 
