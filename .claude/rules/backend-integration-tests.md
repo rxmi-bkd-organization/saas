@@ -1,6 +1,6 @@
 ---
 paths:
-  - "backend/src/test/java/**/*IT.java"
+  - "backend/src/test/java/**/*IntegrationTests.java"
   - "backend/src/test/java/**/*Client.java"
   - "backend/src/test/java/**/*Assertions.java"
 ---
@@ -9,7 +9,7 @@ paths:
 
 ## Structure
 
-- One `<Feature>IT` class per endpoint/use case, in the feature package (`user/MeIT.java`), extending `AbstractIntegrationTest`.
+- One `<Feature>IntegrationTests` class per endpoint/use case, in the feature package (`user/MeIntegrationTests.java`), extending `AbstractIntegrationTest`.
 - HTTP calls live in `<Domain>Client` classes (`UserClient`, `SecurityClient`), built on `RestClient` and registered in `AbstractIntegrationTest`. Tests never use `restClient` directly.
 - Each endpoint has an `xxxOk` method (returns `ResponseEntity<SuccessDto>`) and an `xxxKo` method (returns `ResponseEntity<ErrorDto>`). Add a session-less `xxxKo` overload for the unauthenticated case. Authenticated calls take `String sessionCookie` as first parameter.
 - Response checks live in `<Domain>Assertions` (`assertXxxOk`) and `SharedAssertions.assertKo`, as `public static` methods that return the body when there is one. Tests do not repeat status/body field checks inline.
