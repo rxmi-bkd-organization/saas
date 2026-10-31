@@ -5,6 +5,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.bkd.saas.user.db.AppUserEntity;
 import org.bkd.saas.user.db.UserRepository;
+import org.bkd.saas.user.dto.RoleEnum;
 import org.bkd.saas.user.dto.UserDto;
 import org.bkd.saas.user.dto.UserWithPasswordDto;
 import org.bkd.saas.user.exception.EmailAlreadyUsedException;
@@ -28,7 +29,7 @@ public class UserService {
   private final UserEventPublisher userEventPublisher;
 
   @Transactional
-  public UserDto createUser(String email, String password) {
+  public UserDto createUser(String email, String password, boolean publishUserCreatedEvent) {
     boolean isEmailUsed = userRepository.findByEmail(email).isPresent();
 
     if (isEmailUsed) {
@@ -38,13 +39,22 @@ public class UserService {
     AppUserEntity user = new AppUserEntity(email);
     setPassword(user, password);
     user = userRepository.save(user);
-    userEventPublisher.publishUserCreatedEvent(user.getId(), user.getEmail());
+
+    if (publishUserCreatedEvent) {
+      userEventPublisher.publishUserCreatedEvent(user.getId(), user.getEmail());
+    }
+
     return userMapper.toUserDto(user);
   }
 
   private void setPassword(AppUserEntity user, String password) {
     user.setPassword(passwordEncoder.encode(password));
     user.setPasswordVersion(user.getPasswordVersion() + 1);
+  }
+
+  @Transactional
+  public UserDto getOrCreateUser(String email, String password, boolean publishUserCreatedEvent) {
+    return readUser(email).orElseGet(() -> createUser(email, password, publishUserCreatedEvent));
   }
 
   public UserDto readUser(UUID userId) {
@@ -119,5 +129,12 @@ public class UserService {
     setPassword(user, newPassword);
     userRepository.save(user);
     userEventPublisher.publishUserPasswordUpdatedEvent(userId, currentSessionId);
+  }
+
+  @Transactional
+  public void updateUserRole(UUID userId, RoleEnum role) {
+    AppUserEntity user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+    user.setRole(role);
+    userRepository.save(user);
   }
 }
