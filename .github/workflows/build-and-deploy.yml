@@ -78,7 +78,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: compose.production.yml
+          source: compose.production.yml,postgresql.conf
           target: /home/github-actions/saas
 
       - uses: appleboy/ssh-action@v1.2.0
