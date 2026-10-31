@@ -32,7 +32,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-class UpdateUserPasswordIT extends AbstractIntegrationTest {
+class UpdateUserPasswordIntegrationTests extends AbstractIntegrationTest {
   private static final String EMAIL = "update-password@example.com";
   private static final String OLD_PASSWORD = "password123";
   private static final String NEW_PASSWORD = "new-password456";

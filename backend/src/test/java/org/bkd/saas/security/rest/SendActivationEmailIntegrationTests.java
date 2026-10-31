@@ -34,7 +34,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
-class SendActivationEmailIT extends AbstractIntegrationTest {
+class SendActivationEmailIntegrationTests extends AbstractIntegrationTest {
   private static final String EMAIL = "send-activation@example.com";
   private static final String UNNORMALIZED_EMAIL = "  Send-Activation@Example.COM ";
   private static final String UNKNOWN_EMAIL = "unknown@example.com";

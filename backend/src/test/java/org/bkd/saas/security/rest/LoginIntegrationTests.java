@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-class LoginIT extends AbstractIntegrationTest {
+class LoginIntegrationTests extends AbstractIntegrationTest {
   private static final String EMAIL = "login@example.com";
   private static final String UNNORMALIZED_EMAIL = "  Login@Example.COM ";
   private static final String UNKNOWN_EMAIL = "unknown@example.com";

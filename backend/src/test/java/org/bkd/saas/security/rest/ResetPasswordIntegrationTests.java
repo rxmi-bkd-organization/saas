@@ -34,7 +34,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-class ResetPasswordIT extends AbstractIntegrationTest {
+class ResetPasswordIntegrationTests extends AbstractIntegrationTest {
   private static final String EMAIL = "reset-password@example.com";
   private static final String OLD_PASSWORD = "password123";
   private static final String NEW_PASSWORD = "new-password456";

@@ -23,7 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-class CreateUserIT extends AbstractIntegrationTest {
+class CreateUserIntegrationTests extends AbstractIntegrationTest {
   private static final String EMAIL = "new@example.com";
   private static final String UNNORMALIZED_EMAIL = "  Foo@Example.COM ";
   private static final String NORMALIZED_EMAIL = "foo@example.com";

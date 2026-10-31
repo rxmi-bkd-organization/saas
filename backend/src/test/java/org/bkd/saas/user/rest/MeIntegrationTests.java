@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-class MeIT extends AbstractIntegrationTest {
+class MeIntegrationTests extends AbstractIntegrationTest {
   private static final String EMAIL = "me@example.com";
   private static final String PASSWORD = "password123";
 

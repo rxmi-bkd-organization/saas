@@ -33,7 +33,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
-class SendForgottenPasswordEmailIT extends AbstractIntegrationTest {
+class SendForgottenPasswordEmailIntegrationTests extends AbstractIntegrationTest {
   private static final String EMAIL = "forgotten-password@example.com";
   private static final String UNNORMALIZED_EMAIL = "  Forgotten-Password@Example.COM ";
   private static final String UNKNOWN_EMAIL = "unknown@example.com";
