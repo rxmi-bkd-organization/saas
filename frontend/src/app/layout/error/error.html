@@ -1,0 +1,6 @@
+<section>
+  <p>{{ code() }}</p>
+  <p>{{ heading() }}</p>
+  <ng-content />
+  <a [routerLink]="ROUTE_URLS.home">{{ 'errorPage.backToHome' | transloco }}</a>
+</section>

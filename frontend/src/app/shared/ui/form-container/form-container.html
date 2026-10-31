@@ -1,0 +1,11 @@
+<section>
+  <p>{{ heading() }}</p>
+  <form [formRoot]="form()">
+    <ng-content />
+    <button type="submit" [disabled]="submitDisabled()">{{ submitLabel() }}</button>
+    <ng-content select="[formSubmitAside]" />
+    @for (error of form()().errors(); track error.kind) {
+      <p>{{ error.message }}</p>
+    }
+  </form>
+</section>

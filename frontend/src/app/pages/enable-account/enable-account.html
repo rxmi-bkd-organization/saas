@@ -1,0 +1,33 @@
+@switch (state()) {
+  @case ('loading') {
+    <p>{{ 'enableAccount.loading' | transloco }}</p>
+  }
+  @case ('enabled') {
+    <section>
+      <p>{{ 'enableAccount.enabled.heading' | transloco }}</p>
+      <p>{{ 'enableAccount.enabled.description' | transloco }}</p>
+      <a [routerLink]="ROUTE_URLS.signIn">{{ 'enableAccount.enabled.link' | transloco }}</a>
+    </section>
+  }
+  @case ('invalid') {
+    <section>
+      <p>{{ 'enableAccount.invalid.heading' | transloco }}</p>
+      <p>{{ 'enableAccount.invalid.description' | transloco }}</p>
+      <a [routerLink]="ROUTE_URLS.signIn">{{ 'enableAccount.invalid.link' | transloco }}</a>
+    </section>
+  }
+  @case ('error') {
+    <section>
+      <p>{{ 'enableAccount.error.heading' | transloco }}</p>
+      <p>{{ 'enableAccount.error.description' | transloco }}</p>
+      <a [routerLink]="ROUTE_URLS.signIn">{{ 'enableAccount.error.link' | transloco }}</a>
+    </section>
+  }
+  @case ('pending') {
+    <section>
+      <p>{{ 'enableAccount.pending.heading' | transloco }}</p>
+      <p>{{ 'enableAccount.pending.description' | transloco }}</p>
+      <a [routerLink]="ROUTE_URLS.signIn">{{ 'enableAccount.pending.link' | transloco }}</a>
+    </section>
+  }
+}

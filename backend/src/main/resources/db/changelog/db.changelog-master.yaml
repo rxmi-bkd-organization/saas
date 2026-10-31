@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/v1/app-user.yaml
+  - include:
+      file: db/changelog/v1/spring-session.yaml
+  - include:
+      file: db/changelog/v1/seed-users.yaml
+  - include:
+      file: db/changelog/v1/email-lowercase-check.yaml

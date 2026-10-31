@@ -1,0 +1,10 @@
+<app-form-container
+  [form]="signUpForm"
+  [heading]="'signUp.header' | transloco"
+  [submitLabel]="'signUp.submit' | transloco"
+>
+  <app-form-field [field]="signUpForm.email" [label]="'label.email' | transloco" type="email" />
+  <app-form-field [field]="signUpForm.password" [label]="'label.password' | transloco" type="password" />
+</app-form-container>
+
+<a [routerLink]="ROUTE_URLS.signIn">{{ 'signUp.haveAccount' | transloco }}</a>

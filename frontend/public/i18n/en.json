@@ -1,0 +1,112 @@
+{
+  "nav": {
+    "profile": "Profile",
+    "admin": "Admin",
+    "logout": "Logout",
+    "signIn": "Sign In",
+    "language": "Language"
+  },
+  "field": {
+    "email": "email",
+    "password": "password"
+  },
+  "label": {
+    "email": "Email",
+    "password": "Password",
+    "newPassword": "New password",
+    "oldPassword": "Current password"
+  },
+  "error": {
+    "required": "{{ field }} is required",
+    "invalid": "{{ field }} is invalid",
+    "minLength": "{{ field }} must be at least {{ length }} characters",
+    "maxLength": "{{ field }} must be at most {{ length }} characters",
+    "invalidCredentials": "Invalid email or password",
+    "invalidSignInRequest": "Please check your email and password",
+    "disabledAccount": "Your account is disabled or not yet activated",
+    "tooManyAttempts": "Too many failed attempts, please try again later",
+    "serverError": "Something went wrong on our side, please try again later",
+    "networkError": "Unable to reach the server, please check your connection",
+    "accountNotFound": "No account found for this email",
+    "forgotPasswordFailed": "Unable to send the reset email, please try again",
+    "invalidResetPasswordRequest": "Please check your new password",
+    "invalidResetToken": "This reset link is invalid or has expired",
+    "invalidSignUpRequest": "Please check your email and password",
+    "emailAlreadyUsed": "An account with this email already exists",
+    "invalidUpdatePasswordRequest": "Please check your current and new passwords"
+  },
+  "errorPage": {
+    "backToHome": "Back to home",
+    "accessDenied": {
+      "heading": "Access denied",
+      "message": "You don't have permission to view this page."
+    },
+    "notFound": {
+      "heading": "Page not found",
+      "message": "The page you are looking for doesn't exist or has been moved."
+    }
+  },
+  "emailSent": {
+    "heading": "Check your email",
+    "description": "If an account exists for this email, an email has been sent.",
+    "link": "Back to sign in"
+  },
+  "enableAccount": {
+    "loading": "Enabling your account ...",
+    "enabled": {
+      "heading": "Account enabled",
+      "description": "Your account is enabled. You can now sign in.",
+      "link": "Go to sign in"
+    },
+    "invalid": {
+      "heading": "Invalid or expired link",
+      "description": "This activation link is invalid or has expired.",
+      "link": "Back to sign in"
+    },
+    "error": {
+      "heading": "Something went wrong",
+      "description": "We could not enable your account. Please try again later.",
+      "link": "Back to sign in"
+    },
+    "pending": {
+      "heading": "Check your email",
+      "description": "Your account has been created. Click the link we sent you by email to enable your account.",
+      "link": "Back to sign in"
+    }
+  },
+  "forgotPassword": {
+    "header": "Forgot password",
+    "submit": "Send reset email",
+    "backToSignIn": "Back to sign in"
+  },
+  "passwordUpdated": {
+    "heading": "Password updated",
+    "description": "Your password has been reset. You can now sign in.",
+    "link": "Go to sign in"
+  },
+  "profile": {
+    "email": "Email",
+    "role": "Role",
+    "memberSince": "Member since"
+  },
+  "resetPassword": {
+    "header": "Reset password",
+    "submit": "Reset password"
+  },
+  "signIn": {
+    "header": "Sign in",
+    "submit": "Sign in",
+    "noAccount": "No account yet ? Sign up",
+    "forgotPassword": "Forgot your password ?"
+  },
+  "signUp": {
+    "header": "Sign up",
+    "submit": "Sign up",
+    "haveAccount": "Already have an account ? Sign in"
+  },
+  "updatePassword": {
+    "header": "Update password",
+    "submit": "Update password",
+    "success": "Your password has been updated."
+  }
+}

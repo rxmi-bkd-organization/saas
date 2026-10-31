@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-main: #ffdc58;
+  --color-accent: #ff6b9d;
+  --color-info: #7dd3fc;
+  --color-success: #86efac;
+  --color-danger: #ff5c5c;
+  --color-paper: #fff8e7;
+  --color-ink: #000000;
+
+  --font-sans: 'Space Grotesk';
+}
+
+@layer base {
+  a {
+    @apply underline font-bold;
+  }
+}
+
+@layer components {
+  .ui-input {
+    @apply bg-red-500;
+  }
+}

@@ -1,0 +1,97 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1791464551200-7
+      author: rami-boukadida
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: spring_session
+            columns:
+              - column:
+                  name: primary_id
+                  type: CHAR(36)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: spring_session_pk
+              - column:
+                  name: session_id
+                  type: CHAR(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_time
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_access_time
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: max_inactive_interval
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expiry_time
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: principal_name
+                  type: VARCHAR(100)
+        - createIndex:
+            indexName: spring_session_ix1
+            tableName: spring_session
+            unique: true
+            columns:
+              - column:
+                  name: session_id
+        - createIndex:
+            indexName: spring_session_ix2
+            tableName: spring_session
+            columns:
+              - column:
+                  name: expiry_time
+        - createIndex:
+            indexName: spring_session_ix3
+            tableName: spring_session
+            columns:
+              - column:
+                  name: principal_name
+  - changeSet:
+      id: 1791464551200-8
+      author: rami-boukadida
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            tableName: spring_session_attributes
+            columns:
+              - column:
+                  name: session_primary_id
+                  type: CHAR(36)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: spring_session_attributes_pk
+              - column:
+                  name: attribute_name
+                  type: VARCHAR(200)
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: spring_session_attributes_pk
+              - column:
+                  name: attribute_bytes
+                  type: BYTEA
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: spring_session_attributes
+            baseColumnNames: session_primary_id
+            constraintName: spring_session_attributes_fk
+            referencedTableName: spring_session
+            referencedColumnNames: primary_id
+            onDelete: CASCADE
