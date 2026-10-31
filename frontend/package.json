@@ -9,7 +9,7 @@
     "test": "ng test",
     "format": "prettier --write \"src/**/*.{js,ts,html,scss,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{js,ts,html,scss,css,json}\"",
-    "lint": "ng lint"
+    "lint:check": "ng lint"
   },
   "private": true,
   "packageManager": "npm@11.19.1",

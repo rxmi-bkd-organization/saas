@@ -42,14 +42,14 @@ public class RateLimitFilter extends OncePerRequestFilter {
   private final RateLimitService rateLimitService;
 
   @Override
-  protected boolean shouldNotFilter(HttpServletRequest request) {
+  public boolean shouldNotFilter(HttpServletRequest request) {
     return !POLICY_BY_PATH.containsKey(request.getServletPath());
   }
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request,
-                                  HttpServletResponse response,
-                                  FilterChain filterChain) throws ServletException, IOException {
+  public void doFilterInternal(HttpServletRequest request,
+                               HttpServletResponse response,
+                               FilterChain filterChain) throws ServletException, IOException {
     try {
       rateLimitService.consumeOrThrow(POLICY_BY_PATH.get(request.getServletPath()), request.getRemoteAddr());
     }

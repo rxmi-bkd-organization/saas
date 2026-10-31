@@ -28,4 +28,14 @@ public class ActivationTokenService {
   public UUID readSubject(String jwt) throws InvalidTokenException {
     return UUID.fromString(jsonWebTokenService.readJwt(jwt).getSubject());
   }
+
+  public boolean isValidJwt(String jwt) {
+    try {
+      readSubject(jwt);
+      return true;
+    }
+    catch (InvalidTokenException | IllegalArgumentException e) {
+      return false;
+    }
+  }
 }

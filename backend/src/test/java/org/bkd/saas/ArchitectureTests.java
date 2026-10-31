@@ -2,6 +2,7 @@ package org.bkd.saas;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.methods;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 import com.tngtech.archunit.core.domain.JavaClass;
 import com.tngtech.archunit.core.domain.JavaClasses;
@@ -35,10 +36,12 @@ class ArchitectureTests {
   }
 
   @Test
-  void all_exceptions_should_have_response_status_annotation() {
+  void no_class_should_use_response_status_annotation() {
     JavaClasses classes = mainClasses();
 
-    ArchRule rule = classes().that().areAssignableTo(Exception.class).should().beAnnotatedWith(ResponseStatus.class);
+    ArchRule rule = noClasses().should()
+                               .beAnnotatedWith(ResponseStatus.class)
+                               .because("exceptions are mapped to HTTP responses in a ControllerAdvice");
 
     rule.check(classes);
   }
@@ -62,6 +65,7 @@ class ArchitectureTests {
     JavaClasses classes = mainClasses();
     checkSuffixResidesIn(classes, "Controller", "..rest");
     checkSuffixResidesIn(classes, "Routes", "..rest");
+    checkSuffixResidesIn(classes, "ControllerAdvice", "..rest");
     checkSuffixResidesIn(classes, "Request", "..rest.request");
     checkSuffixResidesIn(classes, "Service", "..service");
     checkSuffixResidesIn(classes, "Entity", "..db");
@@ -70,26 +74,30 @@ class ArchitectureTests {
     checkSuffixResidesIn(classes, "Enum", "..dto");
     checkSuffixResidesIn(classes, "Channel", "..channel");
     checkSuffixResidesIn(classes, "Mapper", "..mapper");
+    checkSuffixResidesIn(classes, "Factory", "..factory");
     checkSuffixResidesIn(classes, "Exception", "..exception");
     checkSuffixResidesIn(classes, "Event", "..event");
     checkSuffixResidesIn(classes, "EventPublisher", "..publisher");
     checkSuffixResidesIn(classes, "EventListener", "..listener");
+    checkSuffixResidesIn(classes, "Runner", "..runner");
   }
 
   @Test
   void classes_in_layer_package_should_have_matching_suffix() {
     JavaClasses classes = mainClasses();
-    checkPackageHasSuffix(classes, "..rest", "Controller", "Routes");
+    checkPackageHasSuffix(classes, "..rest", "Controller", "ControllerAdvice", "Routes");
     checkPackageHasSuffix(classes, "..rest.request", "Request");
     checkPackageHasSuffix(classes, "..service", "Service");
     checkPackageHasSuffix(classes, "..db", "Entity", "Repository");
     checkPackageHasSuffix(classes, "..dto", "Dto", "Enum");
     checkPackageHasSuffix(classes, "..channel", "Channel");
     checkPackageHasSuffix(classes, "..mapper", "Mapper", "MapperImpl");
+    checkPackageHasSuffix(classes, "..factory", "Factory");
     checkPackageHasSuffix(classes, "..exception", "Exception");
     checkPackageHasSuffix(classes, "..event", "Event");
     checkPackageHasSuffix(classes, "..publisher", "EventPublisher");
     checkPackageHasSuffix(classes, "..listener", "EventListener");
+    checkPackageHasSuffix(classes, "..runner", "Runner");
   }
 
   private static JavaClasses mainClasses() {

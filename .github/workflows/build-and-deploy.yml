@@ -1,9 +1,14 @@
-name: build & deploy
+name: build and deploy
 
 on:
   push:
     branches: [master]
   workflow_dispatch:
+    inputs:
+      reason:
+        description: Why are you deploying manually ?
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -14,7 +19,15 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
+  format-and-lint:
+    uses: ./.github/workflows/format-and-lint.yml
+
   build:
+    needs: [test, format-and-lint]
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -55,6 +68,7 @@ jobs:
 
   deploy:
     needs: build
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -75,5 +89,5 @@ jobs:
           script: |
             cd /home/github-actions/saas
             docker compose -f compose.production.yml pull
-            docker compose -f compose.production.yml up -d --remove-orphans
+            docker compose -f compose.production.yml up -d --wait --wait-timeout 300 --remove-orphans
             docker image prune -f

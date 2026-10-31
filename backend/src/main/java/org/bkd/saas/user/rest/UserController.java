@@ -28,7 +28,8 @@ public class UserController {
 
   @PostMapping(CREATE_USER)
   public ResponseEntity<UserDto> createUser(@Valid @RequestBody CreateUserRequest request) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(request.email(), request.password()));
+    UserDto user = userService.createUser(request.email(), request.password(), true);
+    return ResponseEntity.status(HttpStatus.CREATED).body(user);
   }
 
   @PutMapping(UPDATE_USER_PASSWORD)
