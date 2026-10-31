@@ -33,9 +33,9 @@ jobs:
       matrix:
         include:
           - context: backend
-            image: ghcr.io/rxmi-bkd/saas-backend
+            image: ghcr.io/rxmi-bkd-organization/saas-backend
           - context: frontend
-            image: ghcr.io/rxmi-bkd/saas-frontend
+            image: ghcr.io/rxmi-bkd-organization/saas-frontend
     steps:
       - uses: actions/checkout@v4
 

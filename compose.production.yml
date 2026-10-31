@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
 
   backend:
-    image: ghcr.io/rxmi-bkd/saas-backend:${IMAGE_TAG:-latest}
+    image: ghcr.io/rxmi-bkd-organization/saas-backend:${IMAGE_TAG:-latest}
     env_file: .env.production
     depends_on:
       postgres:
@@ -26,7 +26,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    image: ghcr.io/rxmi-bkd/saas-frontend:${IMAGE_TAG:-latest}
+    image: ghcr.io/rxmi-bkd-organization/saas-frontend:${IMAGE_TAG:-latest}
     env_file: .env.production
     ports:
       - "80:80"
