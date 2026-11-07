@@ -1,6 +1,6 @@
 # Deployment setup for a new project
 
-This file lists the steps to deploy a new project forked from this boilerplate. It covers the secrets to create, the server to prepare, and the workflow and compose files to update so that a push to `master` builds your images and deploys them.
+This file lists the steps to deploy a new project forked from this boilerplate. It covers the secrets to create, the server to prepare, and the workflow and compose files to update so that a push to `master` builds your images and copies the compose files to the server. You then start the containers manually.
 Every step uses the same example: owner `acme` and project `acme-crm`. Replace them with your own GitHub owner and project name.
 
 Renaming `spring.application.name` and the `org.bkd.saas` Java package is optional and has no effect on deployment.
@@ -16,7 +16,6 @@ Do this first, so the first deploy already uses your own images and directory.
   | `build-and-deploy.yml` | `image: ghcr.io/rxmi-bkd-organization/saas-backend` | `image: ghcr.io/acme/acme-crm-backend` |
   | `build-and-deploy.yml` | `image: ghcr.io/rxmi-bkd-organization/saas-frontend` | `image: ghcr.io/acme/acme-crm-frontend` |
   | `build-and-deploy.yml` | `target: /home/github-actions/saas` | `target: /home/github-actions/acme-crm` |
-  | `build-and-deploy.yml` | `cd /home/github-actions/saas` | `cd /home/github-actions/acme-crm` |
 
 ### Prepare the server
 
@@ -50,10 +49,11 @@ Do this first, so the first deploy already uses your own images and directory.
 
 ### First deploy and verification
 
-- Push to `master`, or run the `build and deploy` workflow manually.
-- On the server, check that the three containers are healthy
+- Push to `master`, or run the `build and deploy` workflow manually. It builds the images and copies the compose files and `scripts/deploy.sh`, but does not start anything.
+- On the server, start the containers and check they are healthy that the three containers are healthy
   ```bash
   cd /home/github-actions/acme-crm
+  ./scripts/deploy.sh
   docker compose -f compose.production.yml ps
   docker compose -f compose.production.yml logs --tail=100 backend
   ```
