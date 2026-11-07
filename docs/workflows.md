@@ -7,7 +7,7 @@ All workflows live in `.github/workflows/`. For the server and secrets setup, se
 | test | `test.yml` | pull request, push to `develop`, called by `build and deploy` | Backend `./mvnw verify`, frontend `npm run build` |
 | format and lint | `format-and-lint.yml` | pull request, push to `develop`, called by `build and deploy` | Backend `spotless:check`, frontend `format:check` and `lint:check` |
 | changes | `changes.yml` | called by `test` and `format and lint` | Detects which side of the repo changed |
-| build and deploy | `build-and-deploy.yml` | push to `master`, manual run | Builds and pushes the images, then deploys to the server |
+| build and deploy | `build-and-deploy.yml` | push to `master`, manual run | Builds and pushes the images, then copies the compose files to the server (containers are restarted manually) |
 
 ## Change detection
 
@@ -32,24 +32,35 @@ format and lint ─┘
 
 - **Trigger:** every push to `master` runs the whole chain, including docs-only pushes. Inside `test` and `format and lint`, the change detection above still applies.
 - **Build:** pushes `ghcr.io/<owner>/<project>-backend` and `-frontend`, each tagged `sha-<short sha>` and `latest`.
-- **Deploy:** copies `compose.production.yml` and `postgresql.conf` to the server, then runs `docker compose pull` and `up -d --wait --wait-timeout 300 --remove-orphans`. `--wait` makes the job fail if a service is not healthy after 5 minutes. A failed deploy does not roll back: the new containers stay up until you fix them.
-- **Concurrency:** deploys are queued (`group: deploy`, no cancellation), so two pushes never deploy at the same time.
+- **Deploy:** only copies `compose.production.yml`, `postgresql.conf` and `scripts/deploy.sh` to the server. It runs no Docker command: the pipeline never pulls images or restarts containers.
+- **Concurrency:** runs are queued (`group: deploy`, no cancellation), so two pushes never copy files at the same time.
+
+### Applying a release on the server
+
+After the pipeline is green, connect to the server and run the Docker commands yourself:
+
+```bash
+cd /home/github-actions/<project>
+./scripts/deploy.sh
+```
+
+`scripts/deploy.sh [image-tag]` (copied by the pipeline, tag defaults to `latest`) runs `docker compose pull`, `up -d --wait --wait-timeout 300 --remove-orphans` and `docker image prune -f`. `--wait` makes it fail if a service is not healthy after 5 minutes. A failed `up` does not roll back: the new containers stay up until you fix them.
 
 ### Manual run
 
-Run it from the Actions tab (`build and deploy` > Run workflow). It asks for a required reason, so there is a record of why the deploy happened.
+Run it from the Actions tab (`build and deploy` > Run workflow). It asks for a required reason, so there is a record of why it ran.
 
-`build` and `deploy` only run when the selected ref is `master`. Starting it from another branch runs the tests and lint, then skips the build and deploy, so a branch can never be deployed by accident.
+`build` and `deploy` only run when the selected ref is `master`. Starting it from another branch runs the tests and lint, then skips the build and file copy, so a branch can never reach the server by accident.
 
 ## Rolling back
 
-- **Revert on `master`:** `git revert <commit>` and push. The pipeline tests, builds and deploys the reverted code.
+- **Revert on `master`:** `git revert <commit>` and push. The pipeline tests, builds and copies the files, then run `./scripts/deploy.sh` on the server.
 - **Directly on the server:** each build also pushes a `sha-<short sha>` tag, so an earlier image can be started without rebuilding:
   ```bash
   cd /home/github-actions/<project>
-  IMAGE_TAG=sha-xxxxxxx docker compose -f compose.production.yml up -d --wait
+  ./scripts/deploy.sh sha-xxxxxxx
   ```
-  The tag only applies to that command. The next deploy goes back to `latest`.
+  The tag only applies to that run. The next `./scripts/deploy.sh` without an argument goes back to `latest`.
 
 ## Permissions
 

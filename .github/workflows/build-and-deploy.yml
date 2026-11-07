@@ -78,16 +78,5 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: compose.production.yml,postgresql.conf
+          source: compose.production.yml,postgresql.conf,scripts/deploy.sh
           target: /home/github-actions/saas
-
-      - uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd /home/github-actions/saas
-            docker compose -f compose.production.yml pull
-            docker compose -f compose.production.yml up -d --wait --wait-timeout 300 --remove-orphans
-            docker image prune -f
