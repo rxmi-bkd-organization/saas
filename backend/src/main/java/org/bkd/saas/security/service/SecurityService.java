@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bkd.saas.security.dto.AccessTokenDto;
 import org.bkd.saas.security.dto.RateLimitPolicyEnum;
 import org.bkd.saas.security.dto.UserDetailsDto;
 import org.bkd.saas.security.exception.InvalidCredentialsException;
@@ -41,22 +42,32 @@ public class SecurityService {
   private final SecurityEventPublisher securityEventPublisher;
   private final SessionAuthenticationStrategy sessionAuthenticationStrategy;
   private final RateLimitService rateLimitService;
+  private final AccessTokenService accessTokenService;
 
   public UserDto login(String email, String password, HttpServletRequest request, HttpServletResponse response) {
+    UserDetailsDto userDetails = authenticate(email, password);
+    Authentication authentication = UsernamePasswordAuthenticationToken.authenticated(userDetails.getId(),
+                                                                                      null,
+                                                                                      userDetails.getAuthorities());
+
+    sessionAuthenticationStrategy.onAuthentication(authentication, request, response);
+    saveSecurityContext(authentication, request, response);
+    securityEventPublisher.publishInteractiveAuthenticationSuccessEvent(authentication);
+    return userService.readUser(userDetails.getId());
+  }
+
+  public AccessTokenDto loginMobile(String email, String password) {
+    UserDetailsDto userDetails = authenticate(email, password);
+    String accessToken = accessTokenService.createJwt(userDetails.getId(), userDetails.getRole());
+    return new AccessTokenDto(accessToken, AccessTokenDto.BEARER, accessTokenService.getExpirationInSeconds());
+  }
+
+  private UserDetailsDto authenticate(String email, String password) {
     try {
       rateLimitService.checkAvailableOrThrow(RateLimitPolicyEnum.LOGIN_FAILURES_BY_EMAIL, email);
       UsernamePasswordAuthenticationToken token = UsernamePasswordAuthenticationToken.unauthenticated(email, password);
       Authentication authenticated = authenticationManager.authenticate(token);
-      UserDetailsDto userDetails = (UserDetailsDto) authenticated.getPrincipal();
-
-      Authentication authentication = UsernamePasswordAuthenticationToken.authenticated(userDetails.getId(),
-                                                                                        null,
-                                                                                        authenticated.getAuthorities());
-
-      sessionAuthenticationStrategy.onAuthentication(authentication, request, response);
-      saveSecurityContext(authentication, request, response);
-      securityEventPublisher.publishInteractiveAuthenticationSuccessEvent(authentication);
-      return userService.readUser(userDetails.getId());
+      return (UserDetailsDto) authenticated.getPrincipal();
     }
     catch (DisabledException | LockedException e) {
       rateLimitService.consume(RateLimitPolicyEnum.LOGIN_FAILURES_BY_EMAIL, email);

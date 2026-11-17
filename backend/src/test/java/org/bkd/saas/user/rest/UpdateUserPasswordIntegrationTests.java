@@ -1,14 +1,14 @@
 package org.bkd.saas.user.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.bkd.saas.security.rest.Routes.LOGIN;
+import static org.bkd.saas.security.rest.Routes.LOGIN_ENDPOINT;
 import static org.bkd.saas.security.rest.SecurityAssertions.assertLoginOk;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MAX_LENGTH;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MIN_LENGTH;
 import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
 import static org.bkd.saas.user.exception.PasswordMismatchException.ERROR_MSG;
-import static org.bkd.saas.user.rest.Routes.ME;
-import static org.bkd.saas.user.rest.Routes.UPDATE_USER_PASSWORD;
+import static org.bkd.saas.user.rest.Routes.ME_ENDPOINT;
+import static org.bkd.saas.user.rest.Routes.UPDATE_USER_PASSWORD_ENDPOINT;
 import static org.bkd.saas.user.rest.UserAssertions.assertMeOk;
 import static org.bkd.saas.user.rest.UserAssertions.assertUpdateUserPasswordOk;
 
@@ -107,7 +107,7 @@ class UpdateUserPasswordIntegrationTests extends AbstractIntegrationTest {
 
     LoginRequest oldPasswordLogin = new LoginRequest(EMAIL, OLD_PASSWORD);
     ResponseEntity<ErrorDto> response = securityClient.loginKo(oldPasswordLogin);
-    assertKo(response, HttpStatus.UNAUTHORIZED, LOGIN, InvalidCredentialsException.ERROR_MSG);
+    assertKo(response, HttpStatus.UNAUTHORIZED, LOGIN_ENDPOINT, InvalidCredentialsException.ERROR_MSG);
   }
 
   @Test
@@ -124,14 +124,14 @@ class UpdateUserPasswordIntegrationTests extends AbstractIntegrationTest {
     UpdateUserPasswordRequest request = new UpdateUserPasswordRequest(OLD_PASSWORD, NEW_PASSWORD);
     userClient.updateUserPasswordOk(sessionCookie, request);
     ResponseEntity<ErrorDto> response = userClient.meKo(otherSessionCookie);
-    assertKo(response, HttpStatus.UNAUTHORIZED, ME);
+    assertKo(response, HttpStatus.UNAUTHORIZED, ME_ENDPOINT);
   }
 
   @Test
   void shouldReturn400AndKeepPassword_whenOldPasswordIsWrong() {
     UpdateUserPasswordRequest request = new UpdateUserPasswordRequest(WRONG_PASSWORD, NEW_PASSWORD);
     ResponseEntity<ErrorDto> response = userClient.updateUserPasswordKo(sessionCookie, request);
-    assertKo(response, HttpStatus.BAD_REQUEST, UPDATE_USER_PASSWORD, ERROR_MSG);
+    assertKo(response, HttpStatus.BAD_REQUEST, UPDATE_USER_PASSWORD_ENDPOINT, ERROR_MSG);
     String hash = userRepository.findByEmail(EMAIL).orElseThrow().getPassword();
     assertThat(passwordEncoder.matches(OLD_PASSWORD, hash)).isTrue();
   }
@@ -142,7 +142,7 @@ class UpdateUserPasswordIntegrationTests extends AbstractIntegrationTest {
   void shouldReturn400_whenOldPasswordIsBlank(String oldPassword) {
     UpdateUserPasswordRequest request = new UpdateUserPasswordRequest(oldPassword, NEW_PASSWORD);
     ResponseEntity<ErrorDto> response = userClient.updateUserPasswordKo(sessionCookie, request);
-    assertKo(response, HttpStatus.BAD_REQUEST, UPDATE_USER_PASSWORD);
+    assertKo(response, HttpStatus.BAD_REQUEST, UPDATE_USER_PASSWORD_ENDPOINT);
   }
 
   @ParameterizedTest
@@ -151,7 +151,7 @@ class UpdateUserPasswordIntegrationTests extends AbstractIntegrationTest {
   void shouldReturn400_whenNewPasswordIsBlank(String newPassword) {
     UpdateUserPasswordRequest request = new UpdateUserPasswordRequest(OLD_PASSWORD, newPassword);
     ResponseEntity<ErrorDto> response = userClient.updateUserPasswordKo(sessionCookie, request);
-    assertKo(response, HttpStatus.BAD_REQUEST, UPDATE_USER_PASSWORD);
+    assertKo(response, HttpStatus.BAD_REQUEST, UPDATE_USER_PASSWORD_ENDPOINT);
   }
 
   @Test
@@ -159,7 +159,7 @@ class UpdateUserPasswordIntegrationTests extends AbstractIntegrationTest {
     String newPassword = PASSWORD_CHAR.repeat(PASSWORD_MIN_LENGTH - 1);
     UpdateUserPasswordRequest request = new UpdateUserPasswordRequest(OLD_PASSWORD, newPassword);
     ResponseEntity<ErrorDto> response = userClient.updateUserPasswordKo(sessionCookie, request);
-    assertKo(response, HttpStatus.BAD_REQUEST, UPDATE_USER_PASSWORD);
+    assertKo(response, HttpStatus.BAD_REQUEST, UPDATE_USER_PASSWORD_ENDPOINT);
   }
 
   @Test
@@ -167,13 +167,13 @@ class UpdateUserPasswordIntegrationTests extends AbstractIntegrationTest {
     String newPassword = PASSWORD_CHAR.repeat(PASSWORD_MAX_LENGTH + 1);
     UpdateUserPasswordRequest request = new UpdateUserPasswordRequest(OLD_PASSWORD, newPassword);
     ResponseEntity<ErrorDto> response = userClient.updateUserPasswordKo(sessionCookie, request);
-    assertKo(response, HttpStatus.BAD_REQUEST, UPDATE_USER_PASSWORD);
+    assertKo(response, HttpStatus.BAD_REQUEST, UPDATE_USER_PASSWORD_ENDPOINT);
   }
 
   @Test
   void shouldReturn401_whenNotAuthenticated() {
     UpdateUserPasswordRequest request = new UpdateUserPasswordRequest(OLD_PASSWORD, NEW_PASSWORD);
     ResponseEntity<ErrorDto> response = userClient.updateUserPasswordKo(request);
-    assertKo(response, HttpStatus.UNAUTHORIZED, UPDATE_USER_PASSWORD);
+    assertKo(response, HttpStatus.UNAUTHORIZED, UPDATE_USER_PASSWORD_ENDPOINT);
   }
 }

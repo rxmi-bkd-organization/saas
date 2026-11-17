@@ -1,7 +1,7 @@
 package org.bkd.saas.security.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.bkd.saas.security.rest.Routes.SEND_FORGOTTEN_PASSWORD_EMAIL;
+import static org.bkd.saas.security.rest.Routes.SEND_FORGOTTEN_PASSWORD_EMAIL_ENDPOINT;
 import static org.bkd.saas.security.rest.SecurityAssertions.assertSendForgottenPasswordEmailOk;
 import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
 import static org.mockito.ArgumentMatchers.any;
@@ -128,7 +128,7 @@ class SendForgottenPasswordEmailIntegrationTests extends AbstractIntegrationTest
 
     assertKo(response,
              HttpStatus.NOT_FOUND,
-             SEND_FORGOTTEN_PASSWORD_EMAIL,
+             SEND_FORGOTTEN_PASSWORD_EMAIL_ENDPOINT,
              UserNotFoundException.ERROR_MSG + UNKNOWN_EMAIL);
 
     verify(notificationService, never()).sendNotification(any(ChannelEnum.class), any());
@@ -140,6 +140,6 @@ class SendForgottenPasswordEmailIntegrationTests extends AbstractIntegrationTest
   void shouldReturn400_whenEmailIsInvalid(String email) {
     ForgotPasswordRequest request = new ForgotPasswordRequest(email);
     ResponseEntity<ErrorDto> response = securityClient.sendForgottenPasswordEmailKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, SEND_FORGOTTEN_PASSWORD_EMAIL);
+    assertKo(response, HttpStatus.BAD_REQUEST, SEND_FORGOTTEN_PASSWORD_EMAIL_ENDPOINT);
   }
 }

@@ -2,7 +2,7 @@ package org.bkd.saas.security.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bkd.saas.security.exception.InvalidTokenException.ERROR_MSG;
-import static org.bkd.saas.security.rest.Routes.ENABLE_USER;
+import static org.bkd.saas.security.rest.Routes.ENABLE_USER_ENDPOINT;
 import static org.bkd.saas.security.rest.SecurityAssertions.assertEnableUserOk;
 import static org.bkd.saas.security.rest.SecurityAssertions.assertLoginOk;
 import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
@@ -90,7 +90,7 @@ class EnableUserIntegrationTests extends AbstractIntegrationTest {
     EnableUserRequest request = new EnableUserRequest(jwt);
     securityClient.enableUserOk(request);
     ResponseEntity<ErrorDto> response = securityClient.enableUserKo(request);
-    assertKo(response, HttpStatus.CONFLICT, ENABLE_USER, UserAlreadyEnabledException.ERROR_MSG + userId);
+    assertKo(response, HttpStatus.CONFLICT, ENABLE_USER_ENDPOINT, UserAlreadyEnabledException.ERROR_MSG + userId);
   }
 
   @Test
@@ -99,14 +99,14 @@ class EnableUserIntegrationTests extends AbstractIntegrationTest {
     String jwt = activationTokenService.createJwt(unknownUserId);
     EnableUserRequest request = new EnableUserRequest(jwt);
     ResponseEntity<ErrorDto> response = securityClient.enableUserKo(request);
-    assertKo(response, HttpStatus.NOT_FOUND, ENABLE_USER, UserNotFoundException.ERROR_MSG + unknownUserId);
+    assertKo(response, HttpStatus.NOT_FOUND, ENABLE_USER_ENDPOINT, UserNotFoundException.ERROR_MSG + unknownUserId);
   }
 
   @Test
   void shouldReturn401_whenTokenIsMalformed() {
     EnableUserRequest request = new EnableUserRequest(MALFORMED_JWT);
     ResponseEntity<ErrorDto> response = securityClient.enableUserKo(request);
-    assertKo(response, HttpStatus.UNAUTHORIZED, ENABLE_USER, ERROR_MSG + MALFORMED_JWT);
+    assertKo(response, HttpStatus.UNAUTHORIZED, ENABLE_USER_ENDPOINT, ERROR_MSG + MALFORMED_JWT);
   }
 
   @Test
@@ -114,7 +114,7 @@ class EnableUserIntegrationTests extends AbstractIntegrationTest {
     String jwt = passwordResetTokenService.createJwt(userId, PASSWORD_VERSION);
     EnableUserRequest request = new EnableUserRequest(jwt);
     ResponseEntity<ErrorDto> response = securityClient.enableUserKo(request);
-    assertKo(response, HttpStatus.UNAUTHORIZED, ENABLE_USER, ERROR_MSG + jwt);
+    assertKo(response, HttpStatus.UNAUTHORIZED, ENABLE_USER_ENDPOINT, ERROR_MSG + jwt);
     boolean enabled = userRepository.findByEmail(EMAIL).orElseThrow().isEnabled();
     assertThat(enabled).isFalse();
   }
@@ -125,6 +125,6 @@ class EnableUserIntegrationTests extends AbstractIntegrationTest {
   void shouldReturn400_whenJwtIsBlank(String jwt) {
     EnableUserRequest request = new EnableUserRequest(jwt);
     ResponseEntity<ErrorDto> response = securityClient.enableUserKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, ENABLE_USER);
+    assertKo(response, HttpStatus.BAD_REQUEST, ENABLE_USER_ENDPOINT);
   }
 }
