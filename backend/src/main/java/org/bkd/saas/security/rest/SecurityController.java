@@ -1,5 +1,6 @@
 package org.bkd.saas.security.rest;
 
+import static org.bkd.saas.security.rest.Routes.CSRF_ENDPOINT;
 import static org.bkd.saas.security.rest.Routes.ENABLE_USER_ENDPOINT;
 import static org.bkd.saas.security.rest.Routes.LOGIN_ENDPOINT;
 import static org.bkd.saas.security.rest.Routes.MOBILE_LOGIN_ENDPOINT;
@@ -20,6 +21,8 @@ import org.bkd.saas.security.rest.request.SendActivationEmailRequest;
 import org.bkd.saas.security.service.SecurityService;
 import org.bkd.saas.user.dto.UserDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +31,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SecurityController {
   private final SecurityService securityService;
+
+  @GetMapping(CSRF_ENDPOINT)
+  public ResponseEntity<Void> csrf(CsrfToken csrfToken) {
+    // The token is deferred: reading it forces the XSRF-TOKEN cookie to be written on the response.
+    csrfToken.getToken();
+    return ResponseEntity.noContent().build();
+  }
 
   @PostMapping(LOGIN_ENDPOINT)
   public ResponseEntity<UserDto> login(@Valid @RequestBody LoginRequest request_,

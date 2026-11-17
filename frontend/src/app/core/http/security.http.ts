@@ -10,6 +10,11 @@ const SECURITY_API = `${PUBLIC_API}/security`;
 export class SecurityHttp {
   private readonly http = inject(HttpClient);
 
+  csrf(): Observable<void> {
+    const url = `${SECURITY_API}/csrf`;
+    return this.http.get<void>(url);
+  }
+
   login(email: string, password: string): Observable<User> {
     const url = `${SECURITY_API}/login`;
     const body = { email, password };
