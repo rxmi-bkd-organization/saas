@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.bkd.saas.security.dto.AccessTokenDto;
 import org.bkd.saas.user.dto.RoleEnum;
 import org.bkd.saas.user.dto.UserDto;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +24,16 @@ public final class SecurityAssertions {
     assertThat(response.getBody().enabled()).isTrue();
     assertThat(response.getBody().createdAt()).isNotNull();
     assertThat(response.getHeaders().get(HttpHeaders.SET_COOKIE)).anyMatch(c -> c.startsWith(SESSION_COOKIE_PREFIX));
+    return response.getBody();
+  }
+
+  public static AccessTokenDto assertLoginMobileOk(ResponseEntity<AccessTokenDto> response, long expectedExpiresIn) {
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).isNotNull();
+    assertThat(response.getBody().accessToken()).isNotBlank();
+    assertThat(response.getBody().tokenType()).isEqualTo(AccessTokenDto.BEARER);
+    assertThat(response.getBody().expiresIn()).isEqualTo(expectedExpiresIn);
+    assertThat(response.getHeaders().get(HttpHeaders.SET_COOKIE)).isNull();
     return response.getBody();
   }
 

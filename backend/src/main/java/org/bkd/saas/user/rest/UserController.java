@@ -21,18 +21,18 @@ public class UserController {
 
   private final UserService userService;
 
-  @GetMapping(ME)
+  @GetMapping({ME_ENDPOINT, MOBILE_ME_ENDPOINT})
   public ResponseEntity<UserDto> me(@AuthenticationPrincipal UUID userId) {
     return ResponseEntity.ok(userService.readUser(userId));
   }
 
-  @PostMapping(CREATE_USER)
+  @PostMapping(CREATE_USER_ENDPOINT)
   public ResponseEntity<UserDto> createUser(@Valid @RequestBody CreateUserRequest request) {
     UserDto user = userService.createUser(request.email(), request.password(), true);
     return ResponseEntity.status(HttpStatus.CREATED).body(user);
   }
 
-  @PutMapping(UPDATE_USER_PASSWORD)
+  @PutMapping(UPDATE_USER_PASSWORD_ENDPOINT)
   public ResponseEntity<Void> updateUserPassword(@AuthenticationPrincipal UUID userId,
                                                  @Valid @RequestBody UpdateUserPasswordRequest request,
                                                  HttpSession session) {

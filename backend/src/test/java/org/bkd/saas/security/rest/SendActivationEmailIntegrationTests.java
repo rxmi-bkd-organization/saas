@@ -1,7 +1,7 @@
 package org.bkd.saas.security.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.bkd.saas.security.rest.Routes.SEND_ACTIVATION_EMAIL;
+import static org.bkd.saas.security.rest.Routes.SEND_ACTIVATION_EMAIL_ENDPOINT;
 import static org.bkd.saas.security.rest.SecurityAssertions.assertSendActivationEmailOk;
 import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
 import static org.mockito.ArgumentMatchers.any;
@@ -113,7 +113,10 @@ class SendActivationEmailIntegrationTests extends AbstractIntegrationTest {
   void shouldReturn404AndSendNothing_whenEmailIsUnknown() {
     SendActivationEmailRequest request = new SendActivationEmailRequest(UNKNOWN_EMAIL);
     ResponseEntity<ErrorDto> response = securityClient.sendActivationEmailKo(request);
-    assertKo(response, HttpStatus.NOT_FOUND, SEND_ACTIVATION_EMAIL, UserNotFoundException.ERROR_MSG + UNKNOWN_EMAIL);
+    assertKo(response,
+             HttpStatus.NOT_FOUND,
+             SEND_ACTIVATION_EMAIL_ENDPOINT,
+             UserNotFoundException.ERROR_MSG + UNKNOWN_EMAIL);
     verify(notificationService, never()).sendNotification(any(ChannelEnum.class), any());
   }
 
@@ -122,7 +125,10 @@ class SendActivationEmailIntegrationTests extends AbstractIntegrationTest {
     enableUser();
     SendActivationEmailRequest request = new SendActivationEmailRequest(EMAIL);
     ResponseEntity<ErrorDto> response = securityClient.sendActivationEmailKo(request);
-    assertKo(response, HttpStatus.CONFLICT, SEND_ACTIVATION_EMAIL, UserAlreadyEnabledException.ERROR_MSG + EMAIL);
+    assertKo(response,
+             HttpStatus.CONFLICT,
+             SEND_ACTIVATION_EMAIL_ENDPOINT,
+             UserAlreadyEnabledException.ERROR_MSG + EMAIL);
     verify(notificationService, never()).sendNotification(any(ChannelEnum.class), any());
   }
 
@@ -132,6 +138,6 @@ class SendActivationEmailIntegrationTests extends AbstractIntegrationTest {
   void shouldReturn400_whenEmailIsInvalid(String email) {
     SendActivationEmailRequest request = new SendActivationEmailRequest(email);
     ResponseEntity<ErrorDto> response = securityClient.sendActivationEmailKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, SEND_ACTIVATION_EMAIL);
+    assertKo(response, HttpStatus.BAD_REQUEST, SEND_ACTIVATION_EMAIL_ENDPOINT);
   }
 }

@@ -1,7 +1,7 @@
 package org.bkd.saas.user.rest;
 
 import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
-import static org.bkd.saas.user.rest.Routes.ME;
+import static org.bkd.saas.user.rest.Routes.ME_ENDPOINT;
 import static org.bkd.saas.user.rest.UserAssertions.assertMeOk;
 
 import org.bkd.saas.AbstractIntegrationTest;
@@ -54,6 +54,6 @@ class MeIntegrationTests extends AbstractIntegrationTest {
   @Test
   void shouldReturn401_whenNotAuthenticated() {
     ResponseEntity<ErrorDto> response = userClient.meKo();
-    assertKo(response, HttpStatus.UNAUTHORIZED, ME);
+    assertKo(response, HttpStatus.UNAUTHORIZED, ME_ENDPOINT);
   }
 }

@@ -1,12 +1,14 @@
 package org.bkd.saas.security.rest;
 
-import static org.bkd.saas.security.rest.Routes.ENABLE_USER;
-import static org.bkd.saas.security.rest.Routes.LOGIN;
-import static org.bkd.saas.security.rest.Routes.RESET_PASSWORD;
-import static org.bkd.saas.security.rest.Routes.SEND_ACTIVATION_EMAIL;
-import static org.bkd.saas.security.rest.Routes.SEND_FORGOTTEN_PASSWORD_EMAIL;
+import static org.bkd.saas.security.rest.Routes.ENABLE_USER_ENDPOINT;
+import static org.bkd.saas.security.rest.Routes.LOGIN_ENDPOINT;
+import static org.bkd.saas.security.rest.Routes.MOBILE_LOGIN_ENDPOINT;
+import static org.bkd.saas.security.rest.Routes.RESET_PASSWORD_ENDPOINT;
+import static org.bkd.saas.security.rest.Routes.SEND_ACTIVATION_EMAIL_ENDPOINT;
+import static org.bkd.saas.security.rest.Routes.SEND_FORGOTTEN_PASSWORD_EMAIL_ENDPOINT;
 
 import lombok.RequiredArgsConstructor;
+import org.bkd.saas.security.dto.AccessTokenDto;
 import org.bkd.saas.security.rest.request.EnableUserRequest;
 import org.bkd.saas.security.rest.request.ForgotPasswordRequest;
 import org.bkd.saas.security.rest.request.LoginRequest;
@@ -25,7 +27,7 @@ public class SecurityClient {
 
   public ResponseEntity<UserDto> loginOk(LoginRequest request) {
     return restClient.post()
-                     .uri(LOGIN)
+                     .uri(LOGIN_ENDPOINT)
                      .contentType(MediaType.APPLICATION_JSON)
                      .body(request)
                      .retrieve()
@@ -34,16 +36,38 @@ public class SecurityClient {
 
   public ResponseEntity<ErrorDto> loginKo(LoginRequest request) {
     return restClient.post()
-                     .uri(LOGIN)
+                     .uri(LOGIN_ENDPOINT)
                      .contentType(MediaType.APPLICATION_JSON)
                      .body(request)
                      .retrieve()
                      .toEntity(ErrorDto.class);
   }
 
+  public ResponseEntity<AccessTokenDto> loginMobileOk(LoginRequest request) {
+    return restClient.post()
+                     .uri(MOBILE_LOGIN_ENDPOINT)
+                     .contentType(MediaType.APPLICATION_JSON)
+                     .body(request)
+                     .retrieve()
+                     .toEntity(AccessTokenDto.class);
+  }
+
+  public ResponseEntity<ErrorDto> loginMobileKo(LoginRequest request) {
+    return restClient.post()
+                     .uri(MOBILE_LOGIN_ENDPOINT)
+                     .contentType(MediaType.APPLICATION_JSON)
+                     .body(request)
+                     .retrieve()
+                     .toEntity(ErrorDto.class);
+  }
+
+  public String loginMobileAndGetAccessToken(LoginRequest request) {
+    return loginMobileOk(request).getBody().accessToken();
+  }
+
   public ResponseEntity<Void> enableUserOk(EnableUserRequest request) {
     return restClient.post()
-                     .uri(ENABLE_USER)
+                     .uri(ENABLE_USER_ENDPOINT)
                      .contentType(MediaType.APPLICATION_JSON)
                      .body(request)
                      .retrieve()
@@ -52,7 +76,7 @@ public class SecurityClient {
 
   public ResponseEntity<ErrorDto> enableUserKo(EnableUserRequest request) {
     return restClient.post()
-                     .uri(ENABLE_USER)
+                     .uri(ENABLE_USER_ENDPOINT)
                      .contentType(MediaType.APPLICATION_JSON)
                      .body(request)
                      .retrieve()
@@ -61,7 +85,7 @@ public class SecurityClient {
 
   public ResponseEntity<Void> sendActivationEmailOk(SendActivationEmailRequest request) {
     return restClient.post()
-                     .uri(SEND_ACTIVATION_EMAIL)
+                     .uri(SEND_ACTIVATION_EMAIL_ENDPOINT)
                      .contentType(MediaType.APPLICATION_JSON)
                      .body(request)
                      .retrieve()
@@ -70,7 +94,7 @@ public class SecurityClient {
 
   public ResponseEntity<ErrorDto> sendActivationEmailKo(SendActivationEmailRequest request) {
     return restClient.post()
-                     .uri(SEND_ACTIVATION_EMAIL)
+                     .uri(SEND_ACTIVATION_EMAIL_ENDPOINT)
                      .contentType(MediaType.APPLICATION_JSON)
                      .body(request)
                      .retrieve()
@@ -79,7 +103,7 @@ public class SecurityClient {
 
   public ResponseEntity<Void> sendForgottenPasswordEmailOk(ForgotPasswordRequest request) {
     return restClient.post()
-                     .uri(SEND_FORGOTTEN_PASSWORD_EMAIL)
+                     .uri(SEND_FORGOTTEN_PASSWORD_EMAIL_ENDPOINT)
                      .contentType(MediaType.APPLICATION_JSON)
                      .body(request)
                      .retrieve()
@@ -88,7 +112,7 @@ public class SecurityClient {
 
   public ResponseEntity<ErrorDto> sendForgottenPasswordEmailKo(ForgotPasswordRequest request) {
     return restClient.post()
-                     .uri(SEND_FORGOTTEN_PASSWORD_EMAIL)
+                     .uri(SEND_FORGOTTEN_PASSWORD_EMAIL_ENDPOINT)
                      .contentType(MediaType.APPLICATION_JSON)
                      .body(request)
                      .retrieve()
@@ -97,7 +121,7 @@ public class SecurityClient {
 
   public ResponseEntity<Void> resetPasswordOk(PasswordResetRequest request) {
     return restClient.post()
-                     .uri(RESET_PASSWORD)
+                     .uri(RESET_PASSWORD_ENDPOINT)
                      .contentType(MediaType.APPLICATION_JSON)
                      .body(request)
                      .retrieve()
@@ -106,7 +130,7 @@ public class SecurityClient {
 
   public ResponseEntity<ErrorDto> resetPasswordKo(PasswordResetRequest request) {
     return restClient.post()
-                     .uri(RESET_PASSWORD)
+                     .uri(RESET_PASSWORD_ENDPOINT)
                      .contentType(MediaType.APPLICATION_JSON)
                      .body(request)
                      .retrieve()

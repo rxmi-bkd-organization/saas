@@ -1,15 +1,17 @@
 package org.bkd.saas.security.rest;
 
-import static org.bkd.saas.security.rest.Routes.ENABLE_USER;
-import static org.bkd.saas.security.rest.Routes.LOGIN;
-import static org.bkd.saas.security.rest.Routes.RESET_PASSWORD;
-import static org.bkd.saas.security.rest.Routes.SEND_ACTIVATION_EMAIL;
-import static org.bkd.saas.security.rest.Routes.SEND_FORGOTTEN_PASSWORD_EMAIL;
+import static org.bkd.saas.security.rest.Routes.ENABLE_USER_ENDPOINT;
+import static org.bkd.saas.security.rest.Routes.LOGIN_ENDPOINT;
+import static org.bkd.saas.security.rest.Routes.MOBILE_LOGIN_ENDPOINT;
+import static org.bkd.saas.security.rest.Routes.RESET_PASSWORD_ENDPOINT;
+import static org.bkd.saas.security.rest.Routes.SEND_ACTIVATION_EMAIL_ENDPOINT;
+import static org.bkd.saas.security.rest.Routes.SEND_FORGOTTEN_PASSWORD_EMAIL_ENDPOINT;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.bkd.saas.security.dto.AccessTokenDto;
 import org.bkd.saas.security.rest.request.EnableUserRequest;
 import org.bkd.saas.security.rest.request.ForgotPasswordRequest;
 import org.bkd.saas.security.rest.request.LoginRequest;
@@ -27,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SecurityController {
   private final SecurityService securityService;
 
-  @PostMapping(LOGIN)
+  @PostMapping(LOGIN_ENDPOINT)
   public ResponseEntity<UserDto> login(@Valid @RequestBody LoginRequest request_,
                                        HttpServletRequest request,
                                        HttpServletResponse response) {
@@ -36,25 +38,30 @@ public class SecurityController {
     return ResponseEntity.ok().body(user);
   }
 
-  @PostMapping(ENABLE_USER)
+  @PostMapping(MOBILE_LOGIN_ENDPOINT)
+  public ResponseEntity<AccessTokenDto> loginMobile(@Valid @RequestBody LoginRequest request) {
+    return ResponseEntity.ok(securityService.loginMobile(request.email(), request.password()));
+  }
+
+  @PostMapping(ENABLE_USER_ENDPOINT)
   public ResponseEntity<Void> enableUser(@Valid @RequestBody EnableUserRequest request) {
     securityService.enableUser(request.jwt());
     return ResponseEntity.noContent().build();
   }
 
-  @PostMapping(SEND_ACTIVATION_EMAIL)
+  @PostMapping(SEND_ACTIVATION_EMAIL_ENDPOINT)
   public ResponseEntity<Void> sendActivationEmail(@Valid @RequestBody SendActivationEmailRequest request) {
     securityService.sendActivationEmail(request.email());
     return ResponseEntity.noContent().build();
   }
 
-  @PostMapping(SEND_FORGOTTEN_PASSWORD_EMAIL)
+  @PostMapping(SEND_FORGOTTEN_PASSWORD_EMAIL_ENDPOINT)
   public ResponseEntity<Void> sendForgottenPasswordEmail(@Valid @RequestBody ForgotPasswordRequest request) {
     securityService.sendForgottenPasswordEmail(request.email());
     return ResponseEntity.noContent().build();
   }
 
-  @PostMapping(RESET_PASSWORD)
+  @PostMapping(RESET_PASSWORD_ENDPOINT)
   public ResponseEntity<Void> resetPassword(@Valid @RequestBody PasswordResetRequest request) {
     securityService.resetPassword(request.jwt(), request.newPassword());
     return ResponseEntity.noContent().build();

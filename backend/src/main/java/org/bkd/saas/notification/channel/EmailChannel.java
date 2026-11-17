@@ -1,13 +1,16 @@
 package org.bkd.saas.notification.channel;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.bkd.saas.notification.dto.ChannelEnum;
 import org.bkd.saas.notification.dto.NotificationDto;
+import org.bkd.saas.notification.service.BrevoService;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
+@RequiredArgsConstructor
 public class EmailChannel implements NotificationChannel {
+
+  private final BrevoService brevoService;
 
   @Override
   public ChannelEnum type() {
@@ -16,6 +19,6 @@ public class EmailChannel implements NotificationChannel {
 
   @Override
   public void sendNotification(NotificationDto notification) {
-    log.info("email to {}: {} - {}", notification.recipient(), notification.subject(), notification.body());
+    brevoService.sendEmail(notification.recipient(), notification.subject(), notification.body());
   }
 }
