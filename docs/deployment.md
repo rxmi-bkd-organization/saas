@@ -38,6 +38,8 @@ Do this first, so the first deploy already uses your own images and directory.
   - `DOMAIN`: your domain, e.g. `crm.acme.com`.
   - `FRONTEND_BASE_URL`: `https://` followed by the same domain. It must use HTTPS because session cookies are `secure` and `same-site=strict`, so the app does not work over plain HTTP.
   - `POSTGRES_DB` / `POSTGRES_USER` / `DB_URL`: keep them consistent because the database name in `DB_URL` must match `POSTGRES_DB`.
+  - `JWT_RESET_PASSWORD_TOKEN_SECRET` and `JWT_ACTIVATION_TOKEN_SECRET`: Generate each one with `openssl rand -base64 48`.
+  - `BREVO_API_KEY`: a Brevo API key (Brevo > SMTP & API > API Keys). Emails are sent from `no-reply@DOMAIN`, so that address (or the `DOMAIN` domain, with SPF/DKIM set up) must be verified as a sender in Brevo, otherwise Brevo rejects or spam-folders the emails.
   - `JWT_RESET_PASSWORD_TOKEN_SECRET`, `JWT_ACTIVATION_TOKEN_SECRET` and `JWT_ACCESS_TOKEN_SECRET` (mobile access tokens): Generate each one with `openssl rand -base64 48`.
   - `JWT_ACCESS_TOKEN_EXPIRATION`: lifetime in seconds of mobile access tokens (default `900`). There is no refresh token and no server-side revocation, so a token stays valid until it expires, even after a password change. Keep it short.
   - `ADMIN_EMAIL` / `ADMIN_PASSWORD`: the admin user, created at every startup if it does not exist, and enabled if it does (password 8 to 64 characters). An existing admin keeps its current password, so changing `ADMIN_PASSWORD` later has no effect. Both are required: if either is missing or invalid, the backend still starts but logs `Admin user seeding failed` and creates no admin.

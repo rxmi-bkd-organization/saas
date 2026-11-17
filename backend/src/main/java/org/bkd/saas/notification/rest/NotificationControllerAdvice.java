@@ -1,6 +1,7 @@
 package org.bkd.saas.notification.rest;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.bkd.saas.notification.exception.EmailSendException;
 import org.bkd.saas.notification.exception.UnsupportedChannelException;
 import org.bkd.saas.shared.dto.ErrorDto;
 import org.bkd.saas.shared.factory.ErrorDtoFactory;
@@ -15,5 +16,10 @@ public class NotificationControllerAdvice {
   @ExceptionHandler(UnsupportedChannelException.class)
   public ResponseEntity<ErrorDto> handleUnsupportedChannel(UnsupportedChannelException e, HttpServletRequest request) {
     return ErrorDtoFactory.buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(), request);
+  }
+
+  @ExceptionHandler(EmailSendException.class)
+  public ResponseEntity<ErrorDto> handleEmailSend(EmailSendException e, HttpServletRequest request) {
+    return ErrorDtoFactory.buildErrorResponse(HttpStatus.BAD_GATEWAY, EmailSendException.ERROR_MSG, request);
   }
 }

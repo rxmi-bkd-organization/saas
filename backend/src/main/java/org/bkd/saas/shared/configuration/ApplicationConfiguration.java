@@ -1,6 +1,7 @@
 package org.bkd.saas.shared.configuration;
 
 import java.time.Duration;
+import org.bkd.saas.notification.configuration.BrevoProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestClient;
 
 @Configuration
-@EnableConfigurationProperties
+@EnableConfigurationProperties(BrevoProperties.class)
 public class ApplicationConfiguration {
   private static final Duration CONNECT_TIMEOUT = Duration.ofSeconds(3);
   private static final Duration READ_TIMEOUT = Duration.ofSeconds(10);
