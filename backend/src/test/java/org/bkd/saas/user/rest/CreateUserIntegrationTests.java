@@ -5,7 +5,7 @@ import static org.bkd.saas.shared.StringUtils.PASSWORD_MAX_LENGTH;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MIN_LENGTH;
 import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
 import static org.bkd.saas.user.exception.EmailAlreadyUsedException.ERROR_MSG;
-import static org.bkd.saas.user.rest.Routes.CREATE_USER;
+import static org.bkd.saas.user.rest.Routes.CREATE_USER_ENDPOINT;
 import static org.bkd.saas.user.rest.UserAssertions.assertCreateUserOk;
 
 import org.bkd.saas.AbstractIntegrationTest;
@@ -74,7 +74,7 @@ class CreateUserIntegrationTests extends AbstractIntegrationTest {
     CreateUserRequest request = new CreateUserRequest(EMAIL, PASSWORD);
     userClient.createUserOk(request);
     ResponseEntity<ErrorDto> response = userClient.createUserKo(request);
-    assertKo(response, HttpStatus.CONFLICT, CREATE_USER, EMAIL_ALREADY_USED);
+    assertKo(response, HttpStatus.CONFLICT, CREATE_USER_ENDPOINT, EMAIL_ALREADY_USED);
   }
 
   @ParameterizedTest
@@ -83,7 +83,7 @@ class CreateUserIntegrationTests extends AbstractIntegrationTest {
   void shouldReturn400_whenEmailIsInvalid(String email) {
     CreateUserRequest request = new CreateUserRequest(email, PASSWORD);
     ResponseEntity<ErrorDto> response = userClient.createUserKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, CREATE_USER);
+    assertKo(response, HttpStatus.BAD_REQUEST, CREATE_USER_ENDPOINT);
   }
 
   @ParameterizedTest
@@ -92,7 +92,7 @@ class CreateUserIntegrationTests extends AbstractIntegrationTest {
   void shouldReturn400_whenPasswordIsBlank(String password) {
     CreateUserRequest request = new CreateUserRequest(EMAIL, password);
     ResponseEntity<ErrorDto> response = userClient.createUserKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, CREATE_USER);
+    assertKo(response, HttpStatus.BAD_REQUEST, CREATE_USER_ENDPOINT);
   }
 
   @Test
@@ -100,7 +100,7 @@ class CreateUserIntegrationTests extends AbstractIntegrationTest {
     String password = PASSWORD_CHAR.repeat(PASSWORD_MIN_LENGTH - 1);
     CreateUserRequest request = new CreateUserRequest(EMAIL, password);
     ResponseEntity<ErrorDto> response = userClient.createUserKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, CREATE_USER);
+    assertKo(response, HttpStatus.BAD_REQUEST, CREATE_USER_ENDPOINT);
   }
 
   @Test
@@ -108,6 +108,6 @@ class CreateUserIntegrationTests extends AbstractIntegrationTest {
     String password = PASSWORD_CHAR.repeat(PASSWORD_MAX_LENGTH + 1);
     CreateUserRequest request = new CreateUserRequest(EMAIL, password);
     ResponseEntity<ErrorDto> response = userClient.createUserKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, CREATE_USER);
+    assertKo(response, HttpStatus.BAD_REQUEST, CREATE_USER_ENDPOINT);
   }
 }

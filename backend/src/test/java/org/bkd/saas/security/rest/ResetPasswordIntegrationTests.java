@@ -1,14 +1,14 @@
 package org.bkd.saas.security.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.bkd.saas.security.rest.Routes.LOGIN;
-import static org.bkd.saas.security.rest.Routes.RESET_PASSWORD;
+import static org.bkd.saas.security.rest.Routes.LOGIN_ENDPOINT;
+import static org.bkd.saas.security.rest.Routes.RESET_PASSWORD_ENDPOINT;
 import static org.bkd.saas.security.rest.SecurityAssertions.assertLoginOk;
 import static org.bkd.saas.security.rest.SecurityAssertions.assertResetPasswordOk;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MAX_LENGTH;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MIN_LENGTH;
 import static org.bkd.saas.shared.rest.SharedAssertions.assertKo;
-import static org.bkd.saas.user.rest.Routes.ME;
+import static org.bkd.saas.user.rest.Routes.ME_ENDPOINT;
 
 import java.util.UUID;
 import org.bkd.saas.AbstractIntegrationTest;
@@ -114,7 +114,7 @@ class ResetPasswordIntegrationTests extends AbstractIntegrationTest {
 
     LoginRequest oldPasswordLogin = new LoginRequest(EMAIL, OLD_PASSWORD);
     ResponseEntity<ErrorDto> response = securityClient.loginKo(oldPasswordLogin);
-    assertKo(response, HttpStatus.UNAUTHORIZED, LOGIN, InvalidCredentialsException.ERROR_MSG);
+    assertKo(response, HttpStatus.UNAUTHORIZED, LOGIN_ENDPOINT, InvalidCredentialsException.ERROR_MSG);
   }
 
   @Test
@@ -124,7 +124,7 @@ class ResetPasswordIntegrationTests extends AbstractIntegrationTest {
     PasswordResetRequest request = new PasswordResetRequest(createValidJwt(), NEW_PASSWORD);
     securityClient.resetPasswordOk(request);
     ResponseEntity<ErrorDto> response = userClient.meKo(sessionCookie);
-    assertKo(response, HttpStatus.UNAUTHORIZED, ME);
+    assertKo(response, HttpStatus.UNAUTHORIZED, ME_ENDPOINT);
   }
 
   @Test
@@ -133,14 +133,17 @@ class ResetPasswordIntegrationTests extends AbstractIntegrationTest {
     PasswordResetRequest request = new PasswordResetRequest(jwt, NEW_PASSWORD);
     securityClient.resetPasswordOk(request);
     ResponseEntity<ErrorDto> response = securityClient.resetPasswordKo(request);
-    assertKo(response, HttpStatus.UNAUTHORIZED, RESET_PASSWORD, InvalidTokenException.ERROR_MSG + jwt);
+    assertKo(response, HttpStatus.UNAUTHORIZED, RESET_PASSWORD_ENDPOINT, InvalidTokenException.ERROR_MSG + jwt);
   }
 
   @Test
   void shouldReturn401_whenTokenIsMalformed() {
     PasswordResetRequest request = new PasswordResetRequest(MALFORMED_JWT, NEW_PASSWORD);
     ResponseEntity<ErrorDto> response = securityClient.resetPasswordKo(request);
-    assertKo(response, HttpStatus.UNAUTHORIZED, RESET_PASSWORD, InvalidTokenException.ERROR_MSG + MALFORMED_JWT);
+    assertKo(response,
+             HttpStatus.UNAUTHORIZED,
+             RESET_PASSWORD_ENDPOINT,
+             InvalidTokenException.ERROR_MSG + MALFORMED_JWT);
   }
 
   @Test
@@ -148,7 +151,7 @@ class ResetPasswordIntegrationTests extends AbstractIntegrationTest {
     String jwt = activationTokenService.createJwt(userId);
     PasswordResetRequest request = new PasswordResetRequest(jwt, NEW_PASSWORD);
     ResponseEntity<ErrorDto> response = securityClient.resetPasswordKo(request);
-    assertKo(response, HttpStatus.UNAUTHORIZED, RESET_PASSWORD, InvalidTokenException.ERROR_MSG + jwt);
+    assertKo(response, HttpStatus.UNAUTHORIZED, RESET_PASSWORD_ENDPOINT, InvalidTokenException.ERROR_MSG + jwt);
     String hash = userRepository.findByEmail(EMAIL).orElseThrow().getPassword();
     assertThat(passwordEncoder.matches(OLD_PASSWORD, hash)).isTrue();
   }
@@ -158,7 +161,7 @@ class ResetPasswordIntegrationTests extends AbstractIntegrationTest {
     String jwt = passwordResetTokenService.createJwt(UUID.randomUUID(), 0);
     PasswordResetRequest request = new PasswordResetRequest(jwt, NEW_PASSWORD);
     ResponseEntity<ErrorDto> response = securityClient.resetPasswordKo(request);
-    assertKo(response, HttpStatus.UNAUTHORIZED, RESET_PASSWORD, InvalidTokenException.ERROR_MSG + jwt);
+    assertKo(response, HttpStatus.UNAUTHORIZED, RESET_PASSWORD_ENDPOINT, InvalidTokenException.ERROR_MSG + jwt);
   }
 
   @ParameterizedTest
@@ -167,7 +170,7 @@ class ResetPasswordIntegrationTests extends AbstractIntegrationTest {
   void shouldReturn400_whenJwtIsBlank(String jwt) {
     PasswordResetRequest request = new PasswordResetRequest(jwt, NEW_PASSWORD);
     ResponseEntity<ErrorDto> response = securityClient.resetPasswordKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, RESET_PASSWORD);
+    assertKo(response, HttpStatus.BAD_REQUEST, RESET_PASSWORD_ENDPOINT);
   }
 
   @ParameterizedTest
@@ -176,7 +179,7 @@ class ResetPasswordIntegrationTests extends AbstractIntegrationTest {
   void shouldReturn400_whenNewPasswordIsBlank(String newPassword) {
     PasswordResetRequest request = new PasswordResetRequest(createValidJwt(), newPassword);
     ResponseEntity<ErrorDto> response = securityClient.resetPasswordKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, RESET_PASSWORD);
+    assertKo(response, HttpStatus.BAD_REQUEST, RESET_PASSWORD_ENDPOINT);
   }
 
   @Test
@@ -184,7 +187,7 @@ class ResetPasswordIntegrationTests extends AbstractIntegrationTest {
     String newPassword = PASSWORD_CHAR.repeat(PASSWORD_MIN_LENGTH - 1);
     PasswordResetRequest request = new PasswordResetRequest(createValidJwt(), newPassword);
     ResponseEntity<ErrorDto> response = securityClient.resetPasswordKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, RESET_PASSWORD);
+    assertKo(response, HttpStatus.BAD_REQUEST, RESET_PASSWORD_ENDPOINT);
   }
 
   @Test
@@ -192,6 +195,6 @@ class ResetPasswordIntegrationTests extends AbstractIntegrationTest {
     String newPassword = PASSWORD_CHAR.repeat(PASSWORD_MAX_LENGTH + 1);
     PasswordResetRequest request = new PasswordResetRequest(createValidJwt(), newPassword);
     ResponseEntity<ErrorDto> response = securityClient.resetPasswordKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, RESET_PASSWORD);
+    assertKo(response, HttpStatus.BAD_REQUEST, RESET_PASSWORD_ENDPOINT);
   }
 }

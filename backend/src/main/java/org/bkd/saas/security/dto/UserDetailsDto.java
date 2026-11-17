@@ -14,9 +14,14 @@ public class UserDetailsDto implements UserDetails {
 
   @Getter
   private final UUID id;
+
   private final String email;
+
+  @Getter
   private final RoleEnum role;
+
   private final boolean enabled;
+
   private final String password;
 
   @Override

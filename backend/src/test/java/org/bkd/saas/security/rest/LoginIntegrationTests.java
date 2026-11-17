@@ -1,6 +1,6 @@
 package org.bkd.saas.security.rest;
 
-import static org.bkd.saas.security.rest.Routes.LOGIN;
+import static org.bkd.saas.security.rest.Routes.LOGIN_ENDPOINT;
 import static org.bkd.saas.security.rest.SecurityAssertions.assertLoginOk;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MAX_LENGTH;
 import static org.bkd.saas.shared.StringUtils.PASSWORD_MIN_LENGTH;
@@ -74,21 +74,21 @@ class LoginIntegrationTests extends AbstractIntegrationTest {
     enableUser();
     LoginRequest request = new LoginRequest(EMAIL, WRONG_PASSWORD);
     ResponseEntity<ErrorDto> response = securityClient.loginKo(request);
-    assertKo(response, HttpStatus.UNAUTHORIZED, LOGIN, InvalidCredentialsException.ERROR_MSG);
+    assertKo(response, HttpStatus.UNAUTHORIZED, LOGIN_ENDPOINT, InvalidCredentialsException.ERROR_MSG);
   }
 
   @Test
   void shouldReturn401_whenEmailIsUnknown() {
     LoginRequest request = new LoginRequest(UNKNOWN_EMAIL, PASSWORD);
     ResponseEntity<ErrorDto> response = securityClient.loginKo(request);
-    assertKo(response, HttpStatus.UNAUTHORIZED, LOGIN, InvalidCredentialsException.ERROR_MSG);
+    assertKo(response, HttpStatus.UNAUTHORIZED, LOGIN_ENDPOINT, InvalidCredentialsException.ERROR_MSG);
   }
 
   @Test
   void shouldReturn403_whenUserIsDisabled() {
     LoginRequest request = new LoginRequest(EMAIL, PASSWORD);
     ResponseEntity<ErrorDto> response = securityClient.loginKo(request);
-    assertKo(response, HttpStatus.FORBIDDEN, LOGIN, DisabledUserException.ERROR_MSG + EMAIL);
+    assertKo(response, HttpStatus.FORBIDDEN, LOGIN_ENDPOINT, DisabledUserException.ERROR_MSG + EMAIL);
   }
 
   @ParameterizedTest
@@ -97,7 +97,7 @@ class LoginIntegrationTests extends AbstractIntegrationTest {
   void shouldReturn400_whenEmailIsInvalid(String email) {
     LoginRequest request = new LoginRequest(email, PASSWORD);
     ResponseEntity<ErrorDto> response = securityClient.loginKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, LOGIN);
+    assertKo(response, HttpStatus.BAD_REQUEST, LOGIN_ENDPOINT);
   }
 
   @ParameterizedTest
@@ -106,7 +106,7 @@ class LoginIntegrationTests extends AbstractIntegrationTest {
   void shouldReturn400_whenPasswordIsBlank(String password) {
     LoginRequest request = new LoginRequest(EMAIL, password);
     ResponseEntity<ErrorDto> response = securityClient.loginKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, LOGIN);
+    assertKo(response, HttpStatus.BAD_REQUEST, LOGIN_ENDPOINT);
   }
 
   @Test
@@ -114,7 +114,7 @@ class LoginIntegrationTests extends AbstractIntegrationTest {
     String password = PASSWORD_CHAR.repeat(PASSWORD_MIN_LENGTH - 1);
     LoginRequest request = new LoginRequest(EMAIL, password);
     ResponseEntity<ErrorDto> response = securityClient.loginKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, LOGIN);
+    assertKo(response, HttpStatus.BAD_REQUEST, LOGIN_ENDPOINT);
   }
 
   @Test
@@ -122,6 +122,6 @@ class LoginIntegrationTests extends AbstractIntegrationTest {
     String password = PASSWORD_CHAR.repeat(PASSWORD_MAX_LENGTH + 1);
     LoginRequest request = new LoginRequest(EMAIL, password);
     ResponseEntity<ErrorDto> response = securityClient.loginKo(request);
-    assertKo(response, HttpStatus.BAD_REQUEST, LOGIN);
+    assertKo(response, HttpStatus.BAD_REQUEST, LOGIN_ENDPOINT);
   }
 }
