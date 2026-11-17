@@ -26,6 +26,7 @@ export class AuthenticationService {
 
   async login(email: string, password: string): Promise<void> {
     const user = await firstValueFrom(this.securityHttp.login(email, password));
+    await firstValueFrom(this.securityHttp.csrf());
     this._user.set(user);
   }
 
@@ -44,6 +45,7 @@ export class AuthenticationService {
   async logout(): Promise<void> {
     try {
       await firstValueFrom(this.securityHttp.logout());
+      await firstValueFrom(this.securityHttp.csrf());
     } finally {
       this._user.set(null);
     }

@@ -22,6 +22,9 @@ public class Routes {
   public static final String LOGOUT = "/logout";
   public static final String LOGOUT_ENDPOINT = PUBLIC_ENDPOINT + LOGOUT;
 
+  public static final String CSRF = "/csrf";
+  public static final String CSRF_ENDPOINT = PUBLIC_ENDPOINT + CSRF;
+
   public static final String SEND_FORGOTTEN_PASSWORD_EMAIL = "/send-forgotten-password-email";
   public static final String SEND_FORGOTTEN_PASSWORD_EMAIL_ENDPOINT = PUBLIC_ENDPOINT + SEND_FORGOTTEN_PASSWORD_EMAIL;
 
