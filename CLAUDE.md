@@ -7,6 +7,12 @@
 - Never leave a doc describing behavior the project no longer has.
 - When you add a new topic that deserves documentation, add a file in `docs/`.
 
+## Branch names
+
+- Format: `<type>/<short-kebab-case-description>`
+- `<type>` is one of the commit types listed below (`feat`, `fix`, `refactor`, `perf`, `style`, `test`, `docs`, `build`, `ops`, `chore`), chosen to match the main purpose of the branch.
+- Description: lowercase, words separated by hyphens, concise.
+
 ## Commit messages
 
 - Format: `<type>: <description>`
