@@ -1,4 +1,11 @@
-{$DOMAIN} {
+{
+	auto_https off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:80 {
 	encode zstd gzip
 
 	handle /api/* {
