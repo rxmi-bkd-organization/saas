@@ -27,3 +27,7 @@
   - `build`: affect build-related components (build tools, dependencies, project version, ...)
   - `ops`: affect operational aspects (infrastructure/IaC, deployment scripts, CI/CD pipelines, backups, monitoring, recovery procedures, ...)
   - `chore`: tasks like initial commit, modifying `.gitignore`, ...
+
+## Code style
+
+- Always assign intermediate objects to a named local variable before passing them to a call or returning them; do not nest object creation inline in call arguments.
