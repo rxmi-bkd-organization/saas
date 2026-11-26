@@ -1,0 +1,5 @@
+# Copy to sites/<project>.caddy: one file per stack.
+# The domain is the stack's DOMAIN, the upstream is its APP_NAME (see .env.production).
+crm.acme.com {
+	reverse_proxy acme-crm:80
+}
