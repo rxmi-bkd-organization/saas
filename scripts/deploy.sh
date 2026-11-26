@@ -8,6 +8,6 @@ cd "$(dirname "$0")/.."
 
 export IMAGE_TAG="${1:-latest}"
 
-docker compose -f compose.production.yml pull
-docker compose -f compose.production.yml up -d --wait --wait-timeout 300 --remove-orphans
+docker compose --env-file .env.production -f compose.production.yml pull
+docker compose --env-file .env.production -f compose.production.yml up -d --wait --wait-timeout 300 --remove-orphans
 docker image prune -f

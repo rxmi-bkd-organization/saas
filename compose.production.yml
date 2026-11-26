@@ -34,18 +34,19 @@ services:
   frontend:
     image: ghcr.io/rxmi-bkd-organization/saas-frontend:${IMAGE_TAG:-latest}
     env_file: .env.production
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - caddy_data:/data
-      - caddy_config:/config
+    networks:
+      default:
+      proxy:
+        aliases:
+          - ${APP_NAME}
     depends_on:
       backend:
         condition: service_healthy
     restart: unless-stopped
 
+networks:
+  proxy:
+    external: true
+
 volumes:
   postgres_data:
-  caddy_data:
-  caddy_config:
