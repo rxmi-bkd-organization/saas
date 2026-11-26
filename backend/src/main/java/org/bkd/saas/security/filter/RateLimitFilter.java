@@ -20,10 +20,10 @@ import org.bkd.saas.security.exception.TooManyRequestsException;
 import org.bkd.saas.security.service.RateLimitService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class RateLimitFilter extends OncePerRequestFilter {
 
