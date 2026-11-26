@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.bkd.saas.user.event.UserCreatedEvent;
 import org.bkd.saas.user.event.UserPasswordUpdatedEvent;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class UserEventPublisher {
 

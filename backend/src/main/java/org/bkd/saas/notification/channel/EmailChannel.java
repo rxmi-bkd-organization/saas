@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.bkd.saas.notification.dto.ChannelEnum;
 import org.bkd.saas.notification.dto.NotificationDto;
 import org.bkd.saas.notification.service.BrevoService;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class EmailChannel implements NotificationChannel {
 
