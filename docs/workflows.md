@@ -44,7 +44,7 @@ cd /home/github-actions/<project>
 ./scripts/deploy.sh
 ```
 
-`scripts/deploy.sh [image-tag]` (copied by the pipeline, tag defaults to `latest`) runs `docker compose pull`, `up -d --wait --wait-timeout 300 --remove-orphans` and `docker image prune -f`. `--wait` makes it fail if a service is not healthy after 5 minutes. A failed `up` does not roll back: the new containers stay up until you fix them.
+`scripts/deploy.sh [image-tag]` (copied by the pipeline, tag defaults to `latest`) runs `docker compose --env-file .env.production pull`, `up -d --wait --wait-timeout 300 --remove-orphans` and `docker image prune -f`. `--wait` makes it fail if a service is not healthy after 5 minutes. A failed `up` does not roll back: the new containers stay up until you fix them.
 
 ### Manual run
 
